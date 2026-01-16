@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mille et une vies - Écriture Biographique</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+        overflow-x: hidden;
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .nav-menu li.has-dropdown {
+        position: relative;
+      }
+
+      .nav-menu li.has-dropdown > a::before {
+        content: "▾";
+        margin-left: 5px;
+        font-size: 0.8rem;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+
+        .nav-menu li a::after {
+          display: none;
+        }
+      }
+
+      /* Ajuster le hero pour la navbar fixe */
+
+      .hero {
+        min-height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+        */
+        background-color: #eee;
+        border-bottom: 1px solid #eeeeee;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        margin-top: 80px;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(107, 179, 184, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        top: -100px;
+        right: -100px;
+        animation: float 20s infinite ease-in-out;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(232, 165, 152, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        bottom: -50px;
+        left: -50px;
+        animation: float 25s infinite ease-in-out reverse;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(30px, 30px) scale(1.1);
+        }
+      }
+
+      .hero-content {
+        max-width: 800px;
+        position: relative;
+        z-index: 1;
+        animation: fadeInUp 1s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 600;
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        color: var(--light-text);
+        font-weight: 300;
+        font-style: italic;
+        margin-bottom: 3rem;
+      }
+
+      /* Section des offres principales */
+      .main-offers {
+        padding: 6rem 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .offers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 3rem;
+        margin-top: 4rem;
+      }
+
+      .offer-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        animation: fadeInCard 0.6s ease-out forwards;
+      }
+
+      .offer-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .offer-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .offer-card:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes fadeInCard {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .offer-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+      }
+
+      .offer-image {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+      }
+
+      .offer-content {
+        padding: 2.5rem;
+      }
+
+      .offer-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .offer-description {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--light-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .offer-highlight {
+        font-weight: 600;
+        color: var(--dark-text);
+      }
+
+      .btn-primary {
+        display: inline-block;
+        padding: 0.9rem 2.2rem;
+        background-color: var(--primary-blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-blue);
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-primary:hover {
+        background-color: transparent;
+        color: var(--primary-blue);
+        transform: scale(1.05);
+      }
+
+      /* Section accompagnement */
+      .accompaniment-section {
+        background: linear-gradient(to bottom, white 0%, var(--light-bg) 100%);
+        padding: 6rem 2rem;
+        text-align: center;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        color: var(--light-text);
+        font-style: italic;
+        margin-bottom: 4rem;
+      }
+
+      .visual-banner {
+        max-width: 1200px;
+        margin: 0 auto 4rem;
+        padding: 3rem;
+        background: linear-gradient(
+          135deg,
+          rgba(107, 179, 184, 0.15) 0%,
+          rgba(232, 165, 152, 0.15) 100%
+        );
+        border-radius: 20px;
+        position: relative;
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .visual-banner-image {
+        width: 100%;
+        height: 350px;
+        background: linear-gradient(135deg, #5b2c91 0%, #3d1b6b 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .visual-banner-image svg {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .visual-banner-content {
+        text-align: left;
+      }
+
+      .visual-banner-content::before {
+        content: "✍️";
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      .visual-banner h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        font-weight: 400;
+      }
+
+      .visual-banner h3 strong {
+        font-weight: 600;
+      }
+
+      .visual-banner p {
+        font-size: 1.1rem;
+        color: var(--light-text);
+        line-height: 1.8;
+      }
+
+      .banner-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+      }
+
+      .btn-outline {
+        display: inline-block;
+        padding: 0.9rem 2rem;
+        background-color: transparent;
+        color: var(--primary-blue);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primary-blue);
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+      }
+
+      .btn-outline:hover {
+        background-color: var(--primary-blue);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(74, 95, 127, 0.3);
+      }
+
+      @media (max-width: 968px) {
+        .visual-banner {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 2rem;
+        }
+
+        .visual-banner-image {
+          height: 250px;
+        }
+      }
+
+      /* Grille des services */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .service-item {
+        text-align: left;
+        padding: 0;
+        background: white;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(74, 95, 127, 0.1);
+        overflow: hidden;
+      }
+
+      .service-item:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .service-icon {
+        width: 100%;
+        height: 180px;
+        margin-bottom: 0;
+        border-radius: 0;
+        object-fit: cover;
+      }
+
+      .service-content {
+        padding: 2rem;
+      }
+
+      .service-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        margin-bottom: 0.8rem;
+      }
+
+      .service-description {
+        font-size: 0.95rem;
+        color: var(--light-text);
+        line-height: 1.7;
+      }
+
+      /* Section statistiques */
+      .stats-section {
+        padding: 5rem 2rem;
+        background: white;
+      }
+
+      .stats-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-top: 4rem;
+      }
+
+      .stat-item {
+        padding: 2rem;
+      }
+
+      .stat-number {
+        font-family: "Playfair Display", serif;
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 1rem;
+        color: var(--light-text);
+        line-height: 1.5;
+      }
+
+      /* Section des offres détaillées */
+      .detailed-offers {
+        padding: 6rem 2rem;
+        background: var(--light-bg);
+
+        h2 {
+          text-align: center;
+        }
+      }
+
+      .detailed-offers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        max-width: 1400px;
+        margin: 4rem auto 0;
+      }
+
+      .detailed-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+      }
+
+      .detailed-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .detailed-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+      }
+
+      .detailed-card-image-wrapper {
+        width: 100%;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .floral-illustration {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .detailed-card:hover .floral-illustration {
+        transform: scale(1.05);
+      }
+
+      .detailed-card-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+
+      .detailed-card-content {
+        padding: 2rem;
+      }
+
+      .detailed-card-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+      }
+
+      .detailed-card-text {
+        font-size: 0.95rem;
+        color: var(--light-text);
+        line-height: 1.7;
+      }
+
+      /* Section CTA */
+      .cta-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          #5d7599 100%
+        );
+        text-align: center;
+        color: white;
+      }
+
+      .cta-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin-bottom: 2rem;
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 1.2rem 3rem;
+        background: white;
+        color: var(--primary-blue);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero {
+          min-height: 90vh;
+          padding: 1.5rem;
+        }
+
+        .main-offers,
+        .accompaniment-section,
+        .stats-section,
+        .detailed-offers {
+          padding: 4rem 1.5rem;
+        }
+
+        .offers-grid,
+        .services-grid,
+        .detailed-offers-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .stat-number {
+          font-size: 3rem;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+
+      /* Animations au scroll */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body id="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="#home">Bienvenue</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Écrire, c'est offrir.</h1>
+        <p class="subtitle">Transmettez une histoire qui restera.</p>
+      </div>
+    </section>
+
+    <!-- Main Offers Section
+    <section class="main-offers">
+      <div class="offers-grid">
+        <div class="offer-card">
+          <img
+            src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=800&h=600&fit=crop"
+            alt="Un instant de vie"
+            class="offer-image"
+          />
+          <div class="offer-content">
+            <h2 class="offer-title">Un instant de vie</h2>
+            <p class="offer-description">
+              <span class="offer-highlight"
+                >Immortaliser une journée qui a compté</span
+              >
+              : un mariage, une naissance, un exploit sportif, un baptême, une
+              rencontre...
+            </p>
+            <a href="#contact" class="btn-primary">En savoir plus</a>
+          </div>
+        </div>
+
+        <div class="offer-card">
+          <img
+            src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&h=600&fit=crop"
+            alt="Un chapitre de vie"
+            class="offer-image"
+          />
+          <div class="offer-content">
+            <h2 class="offer-title">Un chapitre de vie</h2>
+            <p class="offer-description">
+              <span class="offer-highlight"
+                >Conserver les souvenirs d'une période qui vous a touché.e</span
+              >
+              : une grossesse, une vie amoureuse, votre enfance...
+            </p>
+            <a href="#contact" class="btn-primary">En savoir plus</a>
+          </div>
+        </div>
+
+        <div class="offer-card">
+          <img
+            src="https://images.unsplash.com/photo-1491975474562-1f4e30bc9468?w=800&h=600&fit=crop"
+            alt="Une vie entière"
+            class="offer-image"
+          />
+          <div class="offer-content">
+            <h2 class="offer-title">Une vie entière</h2>
+            <p class="offer-description">
+              <span class="offer-highlight"
+                >Ancrer dans un bel ouvrage les souvenirs qui ont marqué votre
+                existence</span
+              >, de votre enfance à aujourd'hui.
+            </p>
+            <a href="#contact" class="btn-primary">En savoir plus</a>
+          </div>
+        </div>
+      </div>
+    </section>
+     -->
+
+    <!-- Accompaniment Section -->
+    <section class="accompaniment-section">
+      <div class="visual-banner fade-in">
+        <div class="visual-banner-image">
+          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Fleurs corail sur fond violet -->
+            <!-- Fleur 1 (en haut) -->
+            <ellipse
+              cx="180"
+              cy="100"
+              rx="30"
+              ry="35"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="155"
+              cy="105"
+              rx="25"
+              ry="30"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="205"
+              cy="105"
+              rx="25"
+              ry="30"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="180"
+              cy="127"
+              rx="25"
+              ry="30"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <circle cx="180" cy="108" r="15" fill="#E85D44" />
+
+            <!-- Fleur 2 (milieu) -->
+            <ellipse
+              cx="220"
+              cy="180"
+              rx="28"
+              ry="33"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="197"
+              cy="185"
+              rx="23"
+              ry="28"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="243"
+              cy="185"
+              rx="23"
+              ry="28"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="220"
+              cy="205"
+              rx="23"
+              ry="28"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <circle cx="220" cy="188" r="13" fill="#E85D44" />
+
+            <!-- Fleur 3 (bas) -->
+            <ellipse
+              cx="170"
+              cy="260"
+              rx="26"
+              ry="31"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="149"
+              cy="265"
+              rx="21"
+              ry="26"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="191"
+              cy="265"
+              rx="21"
+              ry="26"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <ellipse
+              cx="170"
+              cy="283"
+              rx="21"
+              ry="26"
+              fill="#FF7B61"
+              stroke="#E85D44"
+              stroke-width="2"
+            />
+            <circle cx="170" cy="268" r="12" fill="#E85D44" />
+
+            <!-- Tiges et feuilles cyan -->
+            <path
+              d="M 180 127 Q 185 150 195 180 Q 205 210 215 260"
+              stroke="#4FC3E0"
+              stroke-width="5"
+              fill="none"
+            />
+            <path
+              d="M 220 205 Q 210 230 195 265 Q 185 290 175 340"
+              stroke="#4FC3E0"
+              stroke-width="5"
+              fill="none"
+            />
+            <path
+              d="M 170 283 Q 160 310 150 360"
+              stroke="#4FC3E0"
+              stroke-width="5"
+              fill="none"
+            />
+
+            <!-- Feuilles -->
+            <path
+              d="M 190 155 Q 210 160 220 175 Q 205 165 188 158"
+              fill="#4FC3E0"
+            />
+            <path
+              d="M 200 195 Q 220 205 230 220 Q 215 210 198 200"
+              fill="#4FC3E0"
+            />
+            <path
+              d="M 207 230 Q 225 242 235 258 Q 220 248 205 236"
+              fill="#4FC3E0"
+            />
+            <path
+              d="M 188 275 Q 205 287 215 303 Q 200 293 185 281"
+              fill="#4FC3E0"
+            />
+            <path
+              d="M 175 310 Q 190 322 200 338 Q 185 328 172 316"
+              fill="#4FC3E0"
+            />
+
+            <!-- Feuilles gauche -->
+            <path
+              d="M 180 160 Q 160 165 150 180 Q 165 170 182 163"
+              fill="#4FC3E0"
+            />
+            <path
+              d="M 190 215 Q 170 225 160 240 Q 175 230 192 220"
+              fill="#4FC3E0"
+            />
+            <path
+              d="M 180 285 Q 160 295 150 310 Q 165 300 182 290"
+              fill="#4FC3E0"
+            />
+          </svg>
+        </div>
+        <div class="visual-banner-content">
+          <h3>
+            Une offre d'accompagnement
+            <strong>personnalisée en écriture et en création de récits</strong>,
+            pour donner du corps à vos histoires de vie, vos souvenirs et vos
+            projets littéraires.
+          </h3>
+          <div class="banner-buttons">
+            <a href="#contact" class="btn-outline">Me contacter</a>
+            <a href="./merencontrer.html" class="btn-outline">Me rencontrer</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="section-title fade-in">Vous souhaitez</h2>
+
+      <div class="services-grid">
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop"
+            alt="Transmettre"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Transmettre</h3>
+            <p class="service-description">
+              Raconter votre vie, celle de votre famille
+            </p>
+          </div>
+        </div>
+
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1455894127589-22f75500213a?w=400&h=300&fit=crop"
+            alt="Rédiger"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Rédiger</h3>
+            <p class="service-description">
+              Votre projet, un récit édifiant, corriger vos textes
+            </p>
+          </div>
+        </div>
+
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&h=300&fit=crop"
+            alt="Offrir"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Offrir</h3>
+            <p class="service-description">
+              Un cadeau unique pour un mariage, départ en retraite
+            </p>
+          </div>
+        </div>
+
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop"
+            alt="Magnifier"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Magnifier</h3>
+            <p class="service-description">
+              Le patrimoine de votre entreprise ou l'épopée de votre entreprise
+            </p>
+          </div>
+        </div>
+
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1522881193457-37ae97c905bf?w=400&h=300&fit=crop"
+            alt="Partager"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Partager</h3>
+            <p class="service-description">Une expérience forte</p>
+          </div>
+        </div>
+
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=300&fit=crop"
+            alt="Développer"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Développer</h3>
+            <p class="service-description">Vos compétences à l'écrit</p>
+          </div>
+        </div>
+
+        <div class="service-item fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop"
+            alt="Rechercher"
+            class="service-icon"
+          />
+          <div class="service-content">
+            <h3 class="service-title">Rechercher</h3>
+            <p class="service-description">
+              Des données historiques et familiales
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stats-container">
+        <h2 class="section-title fade-in">
+          Particuliers, professionnels,<br />Je vous accompagne dans l'aventure
+          de l'écriture
+        </h2>
+
+        <div class="stats-grid">
+          <div class="stat-item fade-in">
+            <span class="stat-number">1</span>
+            <p class="stat-label">experte en écriture accompagne vos projets</p>
+          </div>
+          <div class="stat-item fade-in">
+            <span class="stat-number">10</span>
+            <p class="stat-label">ans d'expertise d'accompagnement à l'écrit</p>
+          </div>
+          <div class="stat-item fade-in">
+            <span class="stat-number">1001</span>
+            <p class="stat-label">histoires à raconter</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Offers Section -->
+    <section class="detailed-offers">
+      <h2 class="section-title fade-in text-center">
+        Mes offres d'accompagnement
+      </h2>
+
+      <div class="detailed-offers-grid">
+        <a
+          href="biographie.html"
+          class="detailed-card detailed-card-link fade-in"
+        >
+          <div
+            class="detailed-card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #d4e4e8 0%, #b8c9cf 100%);
+            "
+          >
+            <svg
+              class="floral-illustration"
+              viewBox="0 0 300 300"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleur rose supérieure -->
+              <ellipse
+                cx="150"
+                cy="80"
+                rx="25"
+                ry="30"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="125"
+                cy="85"
+                rx="20"
+                ry="25"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="175"
+                cy="85"
+                rx="20"
+                ry="25"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="150"
+                cy="105"
+                rx="20"
+                ry="25"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <circle cx="150" cy="88" r="12" fill="#E785B5" />
+
+              <!-- Fleur rose inférieure -->
+              <ellipse
+                cx="120"
+                cy="150"
+                rx="22"
+                ry="28"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="100"
+                cy="155"
+                rx="18"
+                ry="23"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="140"
+                cy="155"
+                rx="18"
+                ry="23"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="120"
+                cy="172"
+                rx="18"
+                ry="23"
+                fill="#F5C2D8"
+                stroke="#E785B5"
+                stroke-width="2"
+              />
+              <circle cx="120" cy="158" r="10" fill="#E785B5" />
+
+              <!-- Tige et feuilles roses -->
+              <path
+                d="M 150 105 Q 145 130 140 155 Q 135 180 130 220"
+                stroke="#E785B5"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 120 172 Q 115 195 110 240"
+                stroke="#E785B5"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 145 140 Q 160 145 165 155 Q 155 150 145 145"
+                fill="#E785B5"
+              />
+              <path
+                d="M 138 170 Q 150 180 155 195 Q 145 185 135 178"
+                fill="#E785B5"
+              />
+              <path
+                d="M 133 200 Q 145 210 150 225 Q 140 215 130 208"
+                fill="#E785B5"
+              />
+            </svg>
+          </div>
+          <div class="detailed-card-content">
+            <h3 class="detailed-card-title">Biographie</h3>
+            <p class="detailed-card-text">
+              Une biographie, c'est la mémoire d'une vie à transmettre.
+            </p>
+            <p class="detailed-card-text">
+              Je vous accompagne dans cette aventure, par une écriture sur
+              mesure, adaptée à vos attentes et budget.
+            </p>
+          </div>
+        </a>
+
+        <a
+          href="recit-mariage.html"
+          class="detailed-card detailed-card-link fade-in"
+        >
+          <div
+            class="detailed-card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #45c5d1 0%, #2ab5c5 100%);
+            "
+          >
+            <svg
+              class="floral-illustration"
+              viewBox="0 0 300 300"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleur orange/pêche supérieure -->
+              <ellipse
+                cx="150"
+                cy="80"
+                rx="25"
+                ry="30"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="125"
+                cy="85"
+                rx="20"
+                ry="25"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="175"
+                cy="85"
+                rx="20"
+                ry="25"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="150"
+                cy="105"
+                rx="20"
+                ry="25"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <circle cx="150" cy="88" r="12" fill="#4CAF50" />
+
+              <!-- Fleur orange/pêche inférieure -->
+              <ellipse
+                cx="120"
+                cy="155"
+                rx="22"
+                ry="28"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="100"
+                cy="160"
+                rx="18"
+                ry="23"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="140"
+                cy="160"
+                rx="18"
+                ry="23"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="120"
+                cy="177"
+                rx="18"
+                ry="23"
+                fill="#FFB88C"
+                stroke="#4CAF50"
+                stroke-width="2"
+              />
+              <circle cx="120" cy="163" r="10" fill="#4CAF50" />
+
+              <!-- Tige et feuilles vertes -->
+              <path
+                d="M 150 105 Q 145 130 140 160 Q 135 185 130 225"
+                stroke="#4CAF50"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 120 177 Q 115 200 110 245"
+                stroke="#4CAF50"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 145 135 Q 158 140 165 148 Q 155 143 145 138"
+                fill="#4CAF50"
+              />
+              <path
+                d="M 140 165 Q 152 175 158 188 Q 148 178 138 170"
+                fill="#4CAF50"
+              />
+              <path
+                d="M 133 195 Q 145 205 150 220 Q 140 210 130 200"
+                fill="#4CAF50"
+              />
+            </svg>
+          </div>
+          <div class="detailed-card-content">
+            <h3 class="detailed-card-title">Récit de Mariage</h3>
+            <p class="detailed-card-text">
+              Vous êtes à la recherche d'un cadeau de mariage hors du commun?
+            </p>
+            <p class="detailed-card-text">
+              Je rassemble et mets en mots les souvenirs des proches à
+              l'occasion de ce jour unique, ou pour le commémorer.
+            </p>
+          </div>
+        </a>
+
+        <a
+          href="recit-famille.html"
+          class="detailed-card detailed-card-link fade-in"
+        >
+          <div
+            class="detailed-card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #d5d5e0 0%, #b8b8c8 100%);
+            "
+          >
+            <svg
+              class="floral-illustration"
+              viewBox="0 0 300 300"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleur blanche/grise supérieure -->
+              <ellipse
+                cx="160"
+                cy="75"
+                rx="25"
+                ry="30"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="135"
+                cy="80"
+                rx="20"
+                ry="25"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="185"
+                cy="80"
+                rx="20"
+                ry="25"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="160"
+                cy="100"
+                rx="20"
+                ry="25"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <circle cx="160" cy="83" r="12" fill="#E8A598" />
+
+              <!-- Fleur blanche/grise inférieure -->
+              <ellipse
+                cx="125"
+                cy="150"
+                rx="20"
+                ry="26"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="108"
+                cy="155"
+                rx="16"
+                ry="21"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="142"
+                cy="155"
+                rx="16"
+                ry="21"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="125"
+                cy="170"
+                rx="16"
+                ry="21"
+                fill="#E8E8F0"
+                stroke="#E8A598"
+                stroke-width="2"
+              />
+              <circle cx="125" cy="157" r="9" fill="#E8A598" />
+
+              <!-- Tige et feuilles corail -->
+              <path
+                d="M 160 100 Q 155 120 148 145 Q 142 170 135 215"
+                stroke="#E8A598"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 125 170 Q 120 190 115 235"
+                stroke="#E8A598"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 153 125 Q 165 132 170 142 Q 160 135 150 128"
+                fill="#E8A598"
+              />
+              <path
+                d="M 145 160 Q 157 168 162 180 Q 152 172 142 165"
+                fill="#E8A598"
+              />
+              <path
+                d="M 138 190 Q 148 200 153 213 Q 143 203 133 195"
+                fill="#E8A598"
+              />
+            </svg>
+          </div>
+          <div class="detailed-card-content">
+            <h3 class="detailed-card-title">Récit(s) de Famille</h3>
+            <p class="detailed-card-text">
+              Faites vivre vos souvenirs de famille.
+            </p>
+            <p class="detailed-card-text">
+              A partir de vos archives personnelles ou officielles, de
+              recherches historiques ou généalogiques, je collecte, mets en
+              forme et enrichis votre récit familial.
+            </p>
+          </div>
+        </a>
+
+        <a
+          href="moments-vie.html"
+          class="detailed-card detailed-card-link fade-in"
+        >
+          <div
+            class="detailed-card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #ff7b9c 0%, #e85a7b 100%);
+            "
+          >
+            <svg
+              class="floral-illustration"
+              viewBox="0 0 300 300"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleur corail/rouge supérieure -->
+              <ellipse
+                cx="145"
+                cy="80"
+                rx="24"
+                ry="29"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="122"
+                cy="85"
+                rx="19"
+                ry="24"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="168"
+                cy="85"
+                rx="19"
+                ry="24"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="145"
+                cy="103"
+                rx="19"
+                ry="24"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <circle cx="145" cy="87" r="11" fill="#9C27B0" />
+
+              <!-- Fleur corail/rouge inférieure -->
+              <ellipse
+                cx="115"
+                cy="155"
+                rx="21"
+                ry="27"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="97"
+                cy="160"
+                rx="17"
+                ry="22"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="133"
+                cy="160"
+                rx="17"
+                ry="22"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="115"
+                cy="176"
+                rx="17"
+                ry="22"
+                fill="#FF9B85"
+                stroke="#9C27B0"
+                stroke-width="2"
+              />
+              <circle cx="115" cy="162" r="9" fill="#9C27B0" />
+
+              <!-- Tige et feuilles violettes -->
+              <path
+                d="M 145 103 Q 140 128 133 153 Q 128 178 122 220"
+                stroke="#9C27B0"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 115 176 Q 110 198 105 240"
+                stroke="#9C27B0"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 138 133 Q 150 140 156 150 Q 146 143 136 136"
+                fill="#9C27B0"
+              />
+              <path
+                d="M 130 168 Q 142 178 148 191 Q 138 181 128 173"
+                fill="#9C27B0"
+              />
+              <path
+                d="M 124 198 Q 135 208 140 221 Q 130 211 120 203"
+                fill="#9C27B0"
+              />
+            </svg>
+          </div>
+          <div class="detailed-card-content">
+            <h3 class="detailed-card-title">Moments de vie</h3>
+            <p class="detailed-card-text">
+              Écriture passion, l'écrire une carrière professionnelle.
+            </p>
+            <p class="detailed-card-text">
+              Parmi les récits posibles vous, j'offre à des personnages
+              biographiées, pour la marque tangible d'un moment important dans
+              un je reviens sur l'histoire et l'intensité de ce moment important
+              qui va se perdre.
+            </p>
+          </div>
+        </a>
+
+        <a
+          href="#ame-lieux.html"
+          class="detailed-card detailed-card-link fade-in"
+        >
+          <div
+            class="detailed-card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #ffd4a3 0%, #ffc078 100%);
+            "
+          >
+            <svg
+              class="floral-illustration"
+              viewBox="0 0 300 300"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleur beige/jaune supérieure -->
+              <ellipse
+                cx="155"
+                cy="78"
+                rx="24"
+                ry="29"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="132"
+                cy="83"
+                rx="19"
+                ry="24"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="178"
+                cy="83"
+                rx="19"
+                ry="24"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="155"
+                cy="101"
+                rx="19"
+                ry="24"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <circle cx="155" cy="85" r="11" fill="#8D6E63" />
+
+              <!-- Fleur beige/jaune inférieure -->
+              <ellipse
+                cx="125"
+                cy="153"
+                rx="21"
+                ry="27"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="107"
+                cy="158"
+                rx="17"
+                ry="22"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="143"
+                cy="158"
+                rx="17"
+                ry="22"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="125"
+                cy="174"
+                rx="17"
+                ry="22"
+                fill="#FFE4B5"
+                stroke="#8D6E63"
+                stroke-width="2"
+              />
+              <circle cx="125" cy="160" r="9" fill="#8D6E63" />
+
+              <!-- Tige et feuilles marron -->
+              <path
+                d="M 155 101 Q 150 125 143 150 Q 137 175 130 218"
+                stroke="#8D6E63"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 125 174 Q 120 196 115 238"
+                stroke="#8D6E63"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 148 130 Q 160 137 166 147 Q 156 140 146 133"
+                fill="#8D6E63"
+              />
+              <path
+                d="M 140 165 Q 152 175 158 188 Q 148 178 138 170"
+                fill="#8D6E63"
+              />
+              <path
+                d="M 133 195 Q 143 205 148 218 Q 138 208 128 200"
+                fill="#8D6E63"
+              />
+            </svg>
+          </div>
+          <div class="detailed-card-content">
+            <h3 class="detailed-card-title">
+              Âme des lieux, Récit d'entreprise
+            </h3>
+            <p class="detailed-card-text">
+              Votre entreprise poursuit l'âme d'une entreprise ou l'histoire
+              d'une région de vous.
+            </p>
+            <p class="detailed-card-text">
+              Créons ensemble un rapport de la lumière, de souvenirs, de
+              patrimoine familiale recoudé dans l'excellence qui convient à vos
+              collaborateurs.
+            </p>
+          </div>
+        </a>
+
+        <a
+          href="aide-ecriture.html"
+          class="detailed-card detailed-card-link fade-in"
+        >
+          <div
+            class="detailed-card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #c5b3e6 0%, #a895d1 100%);
+            "
+          >
+            <svg
+              class="floral-illustration"
+              viewBox="0 0 300 300"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleur lavande supérieure -->
+              <ellipse
+                cx="148"
+                cy="82"
+                rx="23"
+                ry="28"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="127"
+                cy="87"
+                rx="18"
+                ry="23"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="169"
+                cy="87"
+                rx="18"
+                ry="23"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="148"
+                cy="104"
+                rx="18"
+                ry="23"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <circle cx="148" cy="89" r="10" fill="#7E57C2" />
+
+              <!-- Fleur lavande inférieure -->
+              <ellipse
+                cx="118"
+                cy="157"
+                rx="20"
+                ry="26"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="102"
+                cy="162"
+                rx="16"
+                ry="21"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="134"
+                cy="162"
+                rx="16"
+                ry="21"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <ellipse
+                cx="118"
+                cy="178"
+                rx="16"
+                ry="21"
+                fill="#D4C5F9"
+                stroke="#7E57C2"
+                stroke-width="2"
+              />
+              <circle cx="118" cy="164" r="9" fill="#7E57C2" />
+
+              <!-- Tige et feuilles violettes -->
+              <path
+                d="M 148 104 Q 143 128 136 155 Q 130 180 123 222"
+                stroke="#7E57C2"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 118 178 Q 113 200 108 242"
+                stroke="#7E57C2"
+                stroke-width="4"
+                fill="none"
+              />
+              <path
+                d="M 141 132 Q 152 139 158 149 Q 148 142 138 135"
+                fill="#7E57C2"
+              />
+              <path
+                d="M 133 170 Q 145 180 150 193 Q 140 183 130 175"
+                fill="#7E57C2"
+              />
+              <path
+                d="M 126 200 Q 136 210 141 223 Q 131 213 121 205"
+                fill="#7E57C2"
+              />
+            </svg>
+          </div>
+          <div class="detailed-card-content">
+            <h3 class="detailed-card-title">Aide à l'écriture, Correction</h3>
+            <p class="detailed-card-text">
+              Rédiger, structurer, soliliciter : vos déms de mariage en récit
+              familiaux.
+            </p>
+            <p class="detailed-card-text">
+              Si vous souhaitez garder une récité de vos souvenirs ou écrire un
+              roman, je vous accompagne pour donner de puissance, clarté et
+              structure à vos écrits.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+      <h2 class="cta-title">Vous avez un projet ? Discutons-en !</h2>
+      <a href="mailto:marion@1000etunevies.fr" class="cta-button">
+        Contactez-moi
+      </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a href="mailto:marion@1000etunevies.fr">marion@1000etunevies.fr</a>
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+      const body = document.body;
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // Animation au scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".fade-in").forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Récit(s) de famille - Mille et une vies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+        --navy-blue: #1b3a6b;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Hero Section */
+      .hero-famille {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        color: var(--primary-blue);
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .hero-intro {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 3rem;
+        align-items: center;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      .hero-image-wrapper {
+        width: 100%;
+      }
+
+      .hero-image {
+        width: 100%;
+        height: 350px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .circle-art {
+        width: 200px;
+        height: 200px;
+        background: #1a1a1a;
+        border-radius: 50%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .circle-figure {
+        width: 120px;
+        height: 120px;
+        fill: none;
+        stroke: #ff8c42;
+        stroke-width: 2;
+      }
+
+      .hero-text p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1rem;
+      }
+
+      .hero-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Section Comment se déroule */
+      .deroulement-section {
+        padding: 6rem 2rem;
+        background: white;
+      }
+
+      .section-title-main {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: var(--primary-blue);
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .etapes-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .etape-item {
+        display: grid;
+        grid-template-columns: 1fr 150px;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 3rem;
+        padding: 2.5rem;
+        background: var(--light-bg);
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .etape-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .etape-content h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .etape-content p {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      .etape-visual {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .etape-visual-bg {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .etape-visual-bg.orange {
+        background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+      }
+
+      .etape-visual-bg.gray {
+        background: linear-gradient(135deg, #a8a8a8 0%, #8c8c8c 100%);
+      }
+
+      .etape-visual-bg.purple {
+        background: linear-gradient(135deg, #9b7ebd 0%, #7e5fa6 100%);
+      }
+
+      .etape-visual-bg.green {
+        background: linear-gradient(135deg, #7cb342 0%, #5a9216 100%);
+      }
+
+      .etape-visual-bg.pink {
+        background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+      }
+
+      .etape-visual-bg.cyan {
+        background: linear-gradient(135deg, #c5e1dc 0%, #a8d5ce 100%);
+      }
+
+      .visual-circle {
+        width: 80px;
+        height: 80px;
+        background: #1a1a1a;
+        border-radius: 50%;
+      }
+
+      /* Section Combien ça coûte */
+      .pricing-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+      }
+
+      .pricing-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .pricing-image-wrapper {
+        width: 100%;
+      }
+
+      .pricing-image {
+        width: 100%;
+        height: 350px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pricing-text {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .pricing-text h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+      }
+
+      .pricing-text p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1rem;
+      }
+
+      .pricing-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Section Valoriser */
+      .valoriser-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(135deg, #9b7ebd 0%, #7e5fa6 100%);
+        position: relative;
+      }
+
+      .valoriser-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .valoriser-image-wrapper {
+        width: 100%;
+      }
+
+      .valoriser-image {
+        width: 100%;
+        height: 350px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #c5e1dc 0%, #a8d5ce 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .valoriser-text {
+        color: white;
+      }
+
+      .valoriser-text h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .valoriser-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+      }
+
+      .valoriser-text strong {
+        font-weight: 600;
+      }
+
+      /* Section FAQ */
+      .faq-section {
+        padding: 6rem 2rem;
+        background: white;
+      }
+
+      .faq-grid {
+        max-width: 1200px;
+        margin: 4rem auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 3rem;
+      }
+
+      .faq-item {
+        background: var(--light-bg);
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .faq-item:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .faq-question {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .faq-answer {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      .faq-answer strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Section CTA */
+      .cta-final {
+        background: linear-gradient(
+          135deg,
+          var(--accent-teal) 0%,
+          #5aa9ae 100%
+        );
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+
+      .cta-final h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 2rem;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-contact-final {
+        display: inline-block;
+        padding: 1.2rem 3rem;
+        background: var(--navy-blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-contact-final:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .hero-intro,
+        .pricing-content,
+        .valoriser-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .hero-image-wrapper,
+        .pricing-image-wrapper,
+        .valoriser-image-wrapper {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .etape-item {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          padding: 2rem;
+        }
+
+        .etape-visual {
+          width: 120px;
+          height: 120px;
+          margin: 0 auto;
+        }
+
+        .faq-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .faq-item {
+          padding: 2rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body id="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="./index.html">Accueil</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-famille">
+      <h1 class="hero-title">Récit(s) de famille</h1>
+
+      <div class="hero-intro">
+        <div class="hero-image-wrapper">
+          <div class="hero-image">
+            <div class="circle-art">
+              <svg class="circle-figure" viewBox="0 0 100 100">
+                <path
+                  d="M 30 50 Q 50 30 70 50 Q 50 70 30 50"
+                  stroke="#FF8C42"
+                  stroke-width="2"
+                  fill="none"
+                />
+                <circle
+                  cx="50"
+                  cy="35"
+                  r="8"
+                  stroke="#FF8C42"
+                  stroke-width="2"
+                  fill="none"
+                />
+                <path
+                  d="M 35 55 L 35 75 M 65 55 L 65 75"
+                  stroke="#FF8C42"
+                  stroke-width="2"
+                />
+                <path
+                  d="M 45 60 L 40 80 M 55 60 L 60 80"
+                  stroke="#FF8C42"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="hero-text">
+          <p><strong>Faites vivre vos souvenirs de famille.</strong></p>
+          <p>
+            Transmettre les événements de vie cruciales qu'a connus votre
+            ancêtre ou votre famille, un jour, un événement, une époque comme
+            patrimoine de votre famille, ce qui servir propres, il sera peut
+            aussi histoire de la voir en commun. L'oublie l'oubliérité les
+            permet recherches historiques et généalogiques.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Comment se déroule -->
+    <section class="deroulement-section">
+      <h2 class="section-title-main">Comment se déroule la prestation ?</h2>
+
+      <div class="etapes-container">
+        <!-- Étape 1 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>1. Le premier contact gratuit</h3>
+            <p>
+              Il débute naturellement par une rencontre. Lors de cette échange
+              autour d'un café, je vous propose peut visionnel. Nous définissons
+              le parcelle de la personnage. L'esprit du récit, les projets. le
+              temps chiffre nombre d'entretien droit de la récit, les objectifs
+              et les résultats, des contraintes temporel (prépondérant par un
+              archive ou collecte…
+            </p>
+            <p>
+              Mais votre plaisir à projeter. C'est l'ensemble d'expension et
+              pour les l'homme où l'histoire du famille à part.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg orange">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 2 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>2. Une raconter claire</h3>
+            <p>
+              Suite de la première rencontre, je vous élabore à votre
+              proposition précisant l'ensemble des éléments du projets (ordre
+              d'entretiens, durée de production et prix). Pour un grand projet,
+              prix se surprose, tout est explicite dès de départ.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg gray">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 3 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>3. Les entretiens avec les témoins</h3>
+            <p>
+              Par suivis de conserver le séances d'entretiens avec les témoins
+              (les membres de la famille), selon leur disponibilités et leur
+              confort, individuellement ou en présence, en à distance. Ce
+              entretiens de l'occasion de plus naturalités : ils constituants la
+              matière première de les exécutions transmis de recueillent
+              anecdotes, morcelières de confidences.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg purple">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 4 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>4. Recherches avec à votre critique</h3>
+            <p>
+              Si vous souhaitez enrichir le récit à élaborer de recherches, de
+              contextualisées et des documentaires et crise historique
+              éventuellement et à nos séances documentaires d'ensemble
+              (ouvriers, sous) aussi à leur recherches historiques, l'expression
+              aux donnée plus privée (citer, source). Je me charge d'entretien
+              historique aux privée documentaires et me peut de recherches dans
+              des archives dans des personnalisées publiques. L'objectif est
+              d'étoffer le récit pour le pouvoir transmettre, pour plus
+              présenter de l'histoire de famille dans plus plus contexte plus
+              large.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg green">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 5 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>5. L'écriture d'un livre collectif</h3>
+            <p>
+              À partir de nos notes de enregistrements, ce rétrécrit ou un ou
+              plusieurs texte de structurés. Le style, la forme et le format
+              sont différentes avec vous pour créer en ouvrage de vivant,
+              édifice et fidèle aux personnalités de vos proches.
+              L'identification peut être réalisé sa forme de texte collectif
+              (chapelles, chronologies ou la bibliographiques). Ces permet de
+              conférer de la profondeur à l'histoire et peut le réapproprié le
+              texte.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg pink">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 6 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>6. Relecture et ajustements</h3>
+            <p>
+              Vous recevez la première version du récit pour le commentaire.
+              Pour des versions où l'élaborer pour des relectures et le
+              ajustements. L'ensemble, l'objectif à ce pour le texte l'original
+              se doute être final doit correspondre l'organiser professionnelle
+              l'aider et l'intention du récit famille plus proche.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg cyan">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Étape 7 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>7. Mise en page et finalisation</h3>
+            <p>
+              Une fois le récit validé ce un attentivement relu, corrigé et mis
+              en forme. Vous pouvez émettir l'ouvrage pour sélectionner des
+              illustra cartes véhics, photos, témoignages, des documents
+              photographiques que moi des d'offervre de la couleurs citer et qui
+              évoque et la magie de cette journée magique.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg orange">
+              <div class="visual-circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Et combien ça coûte -->
+    <section class="pricing-section">
+      <h2 class="section-title-main">Et combien ça coûte?</h2>
+
+      <div class="pricing-content">
+        <div class="pricing-image-wrapper">
+          <div class="pricing-image">
+            <div class="circle-art">
+              <svg class="circle-figure" viewBox="0 0 100 100">
+                <path
+                  d="M 30 50 Q 50 30 70 50 Q 50 70 30 50"
+                  stroke="#FF8C42"
+                  stroke-width="2"
+                  fill="none"
+                />
+                <circle
+                  cx="50"
+                  cy="35"
+                  r="8"
+                  stroke="#FF8C42"
+                  stroke-width="2"
+                  fill="none"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="pricing-text">
+          <h2>La prestation va dépendre de l'ampleur du projet</h2>
+          <p>
+            Le prix d'un récit de famille ne change en fonction de
+            <strong>l'ampleur du projet</strong>, du
+            <strong>nombre d'entretiens</strong>, de la
+            <strong>profondeur de recherche historique</strong>, et de
+            <strong>l'épaisseur du livre</strong>.
+          </p>
+          <p>
+            <strong>Pour des lettres le real général</strong> les souvenir d'un
+            récits de l'humaine (témoignages + recherches complets) réalisé par
+            livre compte l'ensemble précompte.
+          </p>
+          <p>
+            L'agent d'un peut s'engage originelle l'Image à l'éditions des de
+            recherche se de résidents de deux de traite.
+          </p>
+          <p>
+            Si vous il vous souhaitez la deuxième – mon approche le structure
+            les prix avec pour un livre, et si plusieurs personnes part le
+            travail sans de récit et privées recherches (exemple : les pages les
+            d'édition et renseigne consentis et diffusion plusieurs familiaux).
+          </p>
+          <p>
+            <strong>Les tarifs à partirude : entre 3000 et 7000€</strong> pour
+            un récits historique et famille 100 et 200 page.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Valoriser vos archives -->
+    <section class="valoriser-section">
+      <div class="valoriser-content">
+        <div class="valoriser-image-wrapper">
+          <div class="valoriser-image">
+            <div class="circle-art">
+              <svg class="circle-figure" viewBox="0 0 100 100">
+                <path
+                  d="M 30 50 Q 50 30 70 50 Q 50 70 30 50"
+                  stroke="#7E5FA6"
+                  stroke-width="2"
+                  fill="none"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="valoriser-text">
+          <h2>Valoriser vos archives</h2>
+          <p><strong>Autre votre simplement !</strong></p>
+          <p>
+            Mettre en décrit les récits de votre vie de la famille vais de la
+            valoriser vos archives : numérise les photos anciens, classent
+            papiers officiels (actes de naissance, mariage…) conservent
+            éventuellement le courrier familiales.
+          </p>
+          <p>
+            Cette étape peut également d'un récit élément : échange des
+            histoires, témoignages et même de la souvenirs tout en garantit
+            préserver vos archives pour vous ou l'heurée.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section FAQ -->
+    <section class="faq-section">
+      <h2 class="section-title-main">Foire aux questions</h2>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3 class="faq-question">
+            Nous sommes hélas trop éloignés, comment écrire notre histoire
+            familiale?
+          </h3>
+          <p class="faq-answer">Ce n'est votre réellement non le problème !</p>
+          <p class="faq-answer">
+            Que vous soyez réseau de partout avec la France où situe à
+            l'étranger, vous pouvons nous organisation le rendez-vous contacteux
+            per visio, donc téléphone et notre d'entretiens d'estraordinaire où
+            peut aussi réunis en visio.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">
+            J'ai envoyé les papiers, mais où est en partie... C'est pas dire ?
+          </h3>
+          <p class="faq-answer">
+            <strong>Ce n'est absolument pas un problème.</strong>
+          </p>
+          <p class="faq-answer">
+            Les archives réseau peuvent nécessité peut manquantes ou l'histoire
+            peut être en moins de document partagé qui devrai nécessaires
+            recherches de famille est de votre l'histoire familiale complète et
+            enrichis.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">
+            J'ai perdu les documents des années de mariage et familien, comment
+            les retrouver?
+          </h3>
+          <p class="faq-answer">
+            Archives, mairies des mairies et je le régions, archives nationales,
+            musées, famille d'archive, etc... Pour vous un mes de présent dans
+            le lieu avec l'atelier les de sources, afin de pouvons ensemble
+            devra pour l'histoire de famille intégrant de recherche de documents
+            important les plus disponibles.
+          </p>
+          <p class="faq-answer">
+            À l'issue nous pouvons les identifier les et de projet précisémences
+            l'à développer les dans le intégrité et déclarés complète.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">À quoi ressemblera l'ouvrage final?</h3>
+          <p class="faq-answer">
+            Notre outil créer démontrer un livre permet, première, jolis, son
+            lire. L'écume content les format. Qu'éditions l'ensemble que
+            l'histoires vous bien où ce préétrez vers qu'elle l'événement de vit
+            peut à l'arriver le dans l'avoir délivrer élitedans.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="cta-final">
+      <h2>Rencontrons-nous !</h2>
+      <div class="cta-buttons">
+        <a href="index.html#contact" class="btn-contact-final">Decouvrir</a>
+        <a href="index.html#contact" class="btn-contact-final">Devis</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a href="mailto:contact@milleetunevies.fr"
+              >contact@milleetunevies.fr</a
+            >
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

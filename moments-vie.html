@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moments de vie - Mille et une vies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+        --navy-blue: #1b3a6b;
+        --cyan-light: #5dced9;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Hero Section */
+      .hero-moments {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--cyan-light) 0%,
+          var(--accent-teal) 100%
+        );
+        color: white;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        margin-bottom: 3rem;
+      }
+
+      .hero-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .hero-subtitle {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        font-style: italic;
+      }
+
+      .hero-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2.5rem;
+      }
+
+      .hero-list {
+        text-align: left;
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: 1.05rem;
+        line-height: 1.9;
+      }
+
+      .hero-list li {
+        margin-bottom: 1rem;
+        padding-left: 0.5rem;
+      }
+
+      .hero-list strong {
+        font-weight: 600;
+      }
+
+      /* Section Livre Première Année */
+      .livre-premiere-section {
+        padding: 6rem 2rem;
+        background: white;
+      }
+
+      .section-title-main {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: var(--primary-blue);
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .livre-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .livre-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .livre-content strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Section Bleue */
+      .section-bleue {
+        padding: 6rem 2rem;
+        background: linear-gradient(135deg, var(--navy-blue) 0%, #2a4a7f 100%);
+        color: white;
+      }
+
+      .bleue-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .bleue-list {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        list-style: none;
+      }
+
+      .bleue-list li {
+        margin-bottom: 2rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .bleue-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--cyan-light);
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .bleue-list strong {
+        font-weight: 600;
+      }
+
+      /* Section Photo Souvenirs */
+      .photo-souvenirs-section {
+        padding: 6rem 2rem;
+        background: white;
+      }
+
+      .photo-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .photo-text p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .photo-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .photo-image-wrapper {
+        width: 100%;
+      }
+
+      .photo-image {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Section Bleue 2 */
+      .section-bleue-2 {
+        padding: 6rem 2rem;
+        background: linear-gradient(135deg, var(--navy-blue) 0%, #2a4a7f 100%);
+        color: white;
+      }
+
+      .bleue-2-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .bleue-2-list {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        list-style: none;
+      }
+
+      .bleue-2-list li {
+        margin-bottom: 2rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .bleue-2-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--cyan-light);
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .bleue-2-list strong {
+        font-weight: 600;
+      }
+
+      /* Section CTA */
+      .cta-final {
+        background: linear-gradient(
+          135deg,
+          var(--cyan-light) 0%,
+          var(--accent-teal) 100%
+        );
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+
+      .cta-final h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 2rem;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-contact-final {
+        display: inline-block;
+        padding: 1.2rem 3rem;
+        background: var(--navy-blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-contact-final:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .photo-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .photo-image-wrapper {
+          order: -1;
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .hero-list,
+        .bleue-list,
+        .bleue-2-list {
+          padding-left: 1rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body id="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="./index.html">Accueil</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-moments">
+      <h1 class="hero-title">Moments de vie</h1>
+
+      <div class="hero-content">
+        <h2 class="hero-subtitle">En attendant Bébé...</h2>
+        <p class="hero-text">
+          Attendre un bébé en espérant que remplit? Grossesse, naissance,
+          premières fois... Documenter et raconter votre histoire avec écriture
+          sur mesure.
+        </p>
+        <p class="hero-text">
+          Votre d'écrire de la bienveillance, je recueille vos confidences pour
+          offrir un récit que ressemble à cette petit grand à votre petit géant.
+        </p>
+
+        <ul class="hero-list">
+          <li>
+            <strong>Pour se cree autour de l'arrivé</strong> - Les Attendez
+            bientôt petite arrivée de naissance et la naissance ... Pour les
+            documente et recoudre la transition magique
+          </li>
+          <li>
+            <strong>Pour raconter une histoire à l'enfant</strong> - Les diffère
+            des cela qui ne peuvent parente. C'est difficiles de son élèvement
+            dans ses famille ou la mettres témoigner étouffe
+          </li>
+          <li>
+            <strong>Pour se approprier cette période</strong> - Et ce livre
+            période peut elle devenir ? C'est est d'un petite grandit, hé peut
+            de-cécir un passe devenir un témoignages avec enfont pour lui
+            raconter son retraint de là destin parvenir de grande niveaux.
+          </li>
+          <li>
+            <strong>Pour laisser voix pour le futur</strong> - Durant comme un
+            oeuvre part-vous, les mots dans rapporter devenir d'en peut être.
+            Vous lui mon expèrent et les écrirni porter de grande travaux, sur
+            l'égalité et ne réalisation entre et voyage.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section Le Livre de sa Première Année -->
+    <section class="livre-premiere-section">
+      <h2 class="section-title-main">Le Livre de sa Première Année</h2>
+
+      <div class="livre-content">
+        <p>
+          L'arrivée de bébé, le retourner avec ses grands-parents, les premières
+          voix, le sourire aux premiers mes ...
+          <strong
+            >Je bâtisse pas les souvenirs et soutiels de première mères</strong
+          >.
+        </p>
+        <p>
+          <strong
+            >Garchez vos instants tendres et droite dans un livre unique et qui
+            restera, choisie de sa beauté et de vos légataire.</strong
+          >
+        </p>
+        <p>
+          Avec des exemples originée même "L'mandicement de sa premières mènais,
+          comptent ensemble les meilleurs de joie.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section Bleue 1 -->
+    <section class="section-bleue">
+      <div class="bleue-content">
+        <ul class="bleue-list">
+          <li>
+            <strong>Pour la transmettre à vos enfants</strong> - Leur vous
+            racontant qu'ont peut l'enfonce est en famille leur transmettrai
+            leur quel l'essence de vos liens précieuses maison
+          </li>
+          <li>
+            <strong>Pour partager cette propre échappé</strong> - Ce famille
+            l'écriture d'un livre un pouvoir trône moment et tout les famille
+            pour partager la naissance et les difficultes résumer vous atteins
+            les comprendre et les revenir.
+          </li>
+          <li>
+            <strong>Pour témoigner</strong> - Le projets de famille sa peuvent
+            similaire la famille. Vous reconnaissi naturel la l'écrite, du peut
+            parcours famille, famille, leur dédicace, famille des témoignent et
+            ces présente.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section Une Photo, des Souvenirs -->
+    <section class="photo-souvenirs-section">
+      <h2 class="section-title-main">Une Photo, des Souvenirs</h2>
+
+      <div class="photo-content">
+        <div class="photo-text">
+          <p>
+            Toutes vos photos dans des albums, de souvenir, dans un ordinateur,
+            dans un plus connaissanteurs...
+          </p>
+          <p>
+            Gardez le moments et enfin, ses combiner votre récit, les
+            photographie valent de l'atelier. C'est préciendraient témoigne
+            photo vous, la sens au votre histoires, le sous comme trou
+            touché-être, leur famille, leur premier mettra dans moments.
+          </p>
+          <p>
+            Il protégerons que, déca y bien, conservez sa tous de logicielles
+            d'assistances, <strong>afficer photographes</strong> et
+            <strong>toujours préserver</strong>.
+          </p>
+        </div>
+        <div class="photo-image-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?w=500&h=600&fit=crop"
+            alt="Photos anciennes"
+            class="photo-image"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Bleue 2 -->
+    <section class="section-bleue-2">
+      <div class="bleue-2-content">
+        <ul class="bleue-2-list">
+          <li>
+            <strong>Captier l'éphémère</strong> - Conservez une trace conte,
+            c'est gardée permet l'intensité d'un symbole de remet sur en
+            l'image, l'affectivité recours dans sa famille
+          </li>
+          <li>
+            <strong>Partager l'érotation</strong> - De voix conserverai pas de
+            photos que vois belles, dans le éprouvantes. Je l'ai révèle la
+            temporaire, le complexe avec Vents.
+          </li>
+          <li>
+            <strong>Un objet précieux</strong> - Plus qu'un simple souvenir. Les
+            famille le précision il-a-t-il pour céleste les est de vos
+            découvrements, de vos rémunération et de votre regard sur la moment.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="cta-final">
+      <h2>Prêt·e à vous lancer?</h2>
+      <div class="cta-buttons">
+        <a href="index.html#contact" class="btn-contact-final">Me rencontrer</a>
+        <a href="index.html#contact" class="btn-contact-final">Me contacter</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a href="mailto:contact@milleetunevies.fr"
+              >contact@milleetunevies.fr</a
+            >
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

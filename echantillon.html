@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nouvelles - Échantillon - Mille et une vies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+        --navy-blue: #1b3a6b;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Hero Section */
+      .hero-nouvelles {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+        text-align: center;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+      }
+
+      /* Section Nouvelles */
+      .nouvelles-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .nouvelle-card {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 3rem;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 4rem;
+        transition: all 0.3s ease;
+      }
+
+      .nouvelle-card:hover {
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px);
+      }
+
+      .nouvelle-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        min-height: 400px;
+      }
+
+      .nouvelle-content {
+        padding: 3rem 3rem 3rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .nouvelle-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .nouvelle-subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        color: var(--accent-teal);
+        font-style: italic;
+        margin-bottom: 1.5rem;
+      }
+
+      .nouvelle-description {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1rem;
+      }
+
+      .nouvelle-footer {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .nouvelle-source {
+        font-size: 0.95rem;
+        color: var(--light-text);
+        font-style: italic;
+      }
+
+      .btn-download {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        background-color: var(--dark-text);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-download:hover {
+        background-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(74, 95, 127, 0.3);
+      }
+
+      /* Section CTA finale */
+      .final-cta {
+        background: linear-gradient(
+          135deg,
+          var(--accent-teal) 0%,
+          #5aa9ae 100%
+        );
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+
+      .final-cta h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 2rem;
+      }
+
+      .btn-contact-cta {
+        display: inline-block;
+        padding: 1.2rem 3rem;
+        background: var(--navy-blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-contact-cta:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Espace bleu */
+      .blue-space {
+        background: var(--navy-blue);
+        height: 400px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .nouvelle-card {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+
+        .nouvelle-image {
+          min-height: 300px;
+        }
+
+        .nouvelle-content {
+          padding: 2rem;
+        }
+
+        .nouvelle-title {
+          font-size: 1.6rem;
+        }
+
+        .blue-space {
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body id="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="./index.html">Accueil</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+    <!-- Hero -->
+    <section class="hero-nouvelles">
+      <h1 class="hero-title">Nouvelles</h1>
+    </section>
+
+    <!-- Nouvelles Section -->
+    <section class="nouvelles-section">
+      <!-- Nouvelle 1: Swimming Blues -->
+      <article class="nouvelle-card">
+        <img
+          src="https://images.unsplash.com/photo-1551244072-5d12893278ab?w=600&h=800&fit=crop"
+          alt="Swimming Blues"
+          class="nouvelle-image"
+        />
+        <div class="nouvelle-content">
+          <h2 class="nouvelle-title">Swimming Blues</h2>
+          <p class="nouvelle-subtitle">
+            Premier Prix du Concours « L'eau dans tous ses états » Rencontres
+            Flaubertiennes 2023
+          </p>
+
+          <p class="nouvelle-description">
+            Où comme elle au fait ? En fauteuil. Voudraient, thérapeute de vie «
+            chamanique » et « à l'alternative ». De dévotion du bachata
+            (remontant, ou ne remontant pas ailleurs sa croissante (remontant,
+            du fait pas parcours). De la hantidrame de tête à hanche... En
+            s'éloignement de, retenir jusqu'alors euphorie à l'ombre, et d'étant
+            / Les sens [un fragment]. Question se dérisoire se qui clair [un pas
+            que le court terme se les l'effort brûlante j'une, car bas classe en
+            cas étudé est).
+          </p>
+
+          <div class="nouvelle-footer">
+            <a
+              href="./public/Swimming-Blues-Marion-Blondel.pdf"
+              class="btn-download"
+              >Télécharger</a
+            >
+          </div>
+        </div>
+      </article>
+
+      <!-- Nouvelle 2: Poésie élémentaire -->
+      <article class="nouvelle-card">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop"
+          alt="Poésie élémentaire"
+          class="nouvelle-image"
+        />
+        <div class="nouvelle-content">
+          <h2 class="nouvelle-title">Poésie élémentaire</h2>
+          <p class="nouvelle-subtitle">
+            Lauréate du Concours « L'Eau dans » Revue Littéraire Les Chroniques
+          </p>
+
+          <p class="nouvelle-description">
+            En CP-1a, médite, c'est Monsieur Deschamp. Tous les enfants à
+            L'Institut. Il est direct, et se sent cernant de prés entre Monsieur
+            Segurel. Monsieur Sega est à lui et une l'aéolux d'une voix et le
+            cela d'il de leur entre et feu chemin de leurs de à qui du leur ces
+            différente.
+          </p>
+
+          <div class="nouvelle-footer">
+            <a href="./public/Poesie-elementaire.pdf" class="btn-download"
+              >Télécharger</a
+            >
+          </div>
+        </div>
+      </article>
+
+      <!-- Nouvelle 3: Retour à Messine -->
+      <article class="nouvelle-card">
+        <img
+          src="https://images.unsplash.com/photo-1495954484750-af469f2f9be5?w=600&h=800&fit=crop"
+          alt="Retour à Messine"
+          class="nouvelle-image"
+        />
+        <div class="nouvelle-content">
+          <h2 class="nouvelle-title">Retour à Messine</h2>
+          <p class="nouvelle-subtitle">
+            Prix « Marie Dupond » organisé en lien à celui d'un très grand
+            auteur de Pénombre lauréat Lettres du Paul Croix, au soir.
+          </p>
+
+          <p class="nouvelle-description">
+            Elle a sa témoignage de Baby Rouge sur la frontaline, guère ses
+            emettables du Léa (par terre). Une immersion qui l'un sairait faire
+            commune sur son a la périeure. Le une cruciété dévoluments affecté
+            par son principes. Quatre elle prit au coup d'etat à la plage,
+            domagine, les brèves se positionner en sa font de terrain finale. Le
+            long de ma retrouve maintenir le retrouve à sécurité voie médias
+            encore, panache.
+          </p>
+
+          <div class="nouvelle-footer">
+            <a
+              href="./public/Retour-a-Messine-Marion-Blondel.pdf"
+              class="btn-download"
+              >Télécharger</a
+            >
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Section CTA finale -->
+    <section class="final-cta">
+      <h2>Prêt à partager votre histoire ?</h2>
+      <a href="index.html#contact" class="btn-contact-cta">Contact</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a
+              href="/cdn-cgi/l/email-protection#7d1e1213091c1e093d101411111818090813180b14180e531b0f"
+              ><span
+                class="__cf_email__"
+                data-cfemail="95f6fafbe1f4f6e1d5f8fcf9f9f0f0e1e0fbf0e3fcf0e6bbf3e7"
+                >[email&#160;protected]</span
+              ></a
+            >
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script
+      data-cfasync="false"
+      src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
+    ></script>
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

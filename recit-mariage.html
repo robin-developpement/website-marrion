@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Récits de mariage - Mille et une vies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+        --navy-blue: #1b3a6b;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Hero Section */
+      .hero-mariage {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        color: var(--primary-blue);
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .hero-intro {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 3rem;
+        align-items: center;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      .hero-image-wrapper {
+        width: 100%;
+      }
+
+      .hero-image {
+        width: 100%;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #f5e6d3 0%, #e8d4be 100%);
+        padding: 2rem;
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .floral-art {
+        width: 100%;
+        height: 100%;
+      }
+
+      .hero-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      /* Section Comment se déroule */
+      .deroulement-section {
+        padding: 6rem 2rem;
+        background: white;
+      }
+
+      .section-title-main {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: var(--primary-blue);
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .etapes-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .etape-item {
+        display: grid;
+        grid-template-columns: 1fr 150px;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 3rem;
+        padding: 2.5rem;
+        background: var(--light-bg);
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .etape-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .etape-content h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .etape-content p {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      .etape-visual {
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .etape-visual-bg {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+      }
+
+      .etape-visual-bg.pink {
+        background: linear-gradient(135deg, #ff6b9d 0%, #e85a8b 100%);
+      }
+
+      .etape-visual-bg.red {
+        background: linear-gradient(135deg, #ff4757 0%, #d63447 100%);
+      }
+
+      .etape-visual-bg.blue {
+        background: linear-gradient(135deg, #4fc3e0 0%, #3aa9c4 100%);
+      }
+
+      .etape-visual-bg.cream {
+        background: linear-gradient(135deg, #f5e6d3 0%, #e8d4be 100%);
+      }
+
+      .etape-visual-bg.yellow {
+        background: linear-gradient(135deg, #ffd93d 0%, #f7c74e 100%);
+      }
+
+      .etape-visual-bg.cyan {
+        background: linear-gradient(135deg, #6fdfdf 0%, #4fc3c3 100%);
+      }
+
+      /* Section FAQ */
+      .faq-section {
+        padding: 6rem 2rem;
+        background: var(--light-bg);
+      }
+
+      .faq-grid {
+        max-width: 1200px;
+        margin: 4rem auto 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        gap: 3rem;
+      }
+
+      .faq-item {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .faq-item:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+      }
+
+      .faq-question {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .faq-answer {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      .faq-answer strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Section CTA */
+      .cta-final {
+        background: linear-gradient(
+          135deg,
+          var(--accent-teal) 0%,
+          #5aa9ae 100%
+        );
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+
+      .cta-final h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 2rem;
+      }
+
+      .btn-contact-final {
+        display: inline-block;
+        padding: 1.2rem 3rem;
+        background: var(--navy-blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-contact-final:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .hero-intro {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .hero-image-wrapper {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .etape-item {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+          padding: 2rem;
+        }
+
+        .etape-visual {
+          width: 120px;
+          height: 120px;
+          margin: 0 auto;
+        }
+
+        .faq-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .faq-item {
+          padding: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body id="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="./index.html">Accueil</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-mariage">
+      <h1 class="hero-title">Récits de mariage</h1>
+
+      <div class="hero-intro">
+        <div class="hero-image-wrapper">
+          <div class="hero-image">
+            <svg
+              class="floral-art"
+              viewBox="0 0 300 350"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fleurs stylisées en noir et blanc -->
+              <g fill="none" stroke="#2C3E50" stroke-width="2">
+                <!-- Feuille gauche -->
+                <path
+                  d="M 80 40 Q 60 80 50 120 Q 40 160 35 200"
+                  stroke-width="3"
+                />
+                <ellipse
+                  cx="45"
+                  cy="80"
+                  rx="15"
+                  ry="40"
+                  transform="rotate(-30 45 80)"
+                />
+                <ellipse
+                  cx="40"
+                  cy="140"
+                  rx="12"
+                  ry="35"
+                  transform="rotate(-20 40 140)"
+                />
+
+                <!-- Fleurs centrales -->
+                <path d="M 150 30 L 150 300" stroke-width="4" />
+
+                <!-- Grappe de fleurs -->
+                <circle cx="150" cy="80" r="8" fill="#2C3E50" />
+                <circle cx="140" cy="95" r="7" fill="#2C3E50" />
+                <circle cx="160" cy="95" r="7" fill="#2C3E50" />
+                <circle cx="145" cy="110" r="6" fill="#2C3E50" />
+                <circle cx="155" cy="110" r="6" fill="#2C3E50" />
+                <circle cx="150" cy="125" r="8" fill="#2C3E50" />
+                <circle cx="138" cy="130" r="6" fill="#2C3E50" />
+                <circle cx="162" cy="130" r="6" fill="#2C3E50" />
+                <circle cx="148" cy="145" r="7" fill="#2C3E50" />
+                <circle cx="152" cy="145" r="7" fill="#2C3E50" />
+
+                <!-- Feuille droite -->
+                <path
+                  d="M 220 50 Q 240 90 250 130 Q 260 170 265 210"
+                  stroke-width="3"
+                />
+                <ellipse
+                  cx="255"
+                  cy="90"
+                  rx="15"
+                  ry="40"
+                  transform="rotate(30 255 90)"
+                />
+                <ellipse
+                  cx="260"
+                  cy="150"
+                  rx="12"
+                  ry="35"
+                  transform="rotate(20 260 150)"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="hero-text">
+          <p>
+            <strong
+              >Offrez aux mariés un trésor littéraire qui raconte leur histoire
+              et celles de leurs proches comme personne d'autre ne pourrait le
+              faire.</strong
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Comment se déroule -->
+    <section class="deroulement-section">
+      <h2 class="section-title-main">Comment se déroule la prestation ?</h2>
+
+      <div class="etapes-container">
+        <!-- Étape 1 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>1. Un premier entretien gratuit</h3>
+            <p>
+              Tout commence par une rencontre. Lors de cet échange autour d'un
+              café, en visioconférence, nous définirons ensemble le cadre de
+              votre projet : la style de récit, les informations principales que
+              vous souhaitez voir figurer, le nombre d'entretiens pour mener le
+              projet à bien, en fonction de votre budget et de vos attentes. Je
+              m'engage par devoir d'écouter en toute de confiance vous proposez.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg pink">🌸</div>
+          </div>
+        </div>
+
+        <!-- Étape 2 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>2. Une raconter claire</h3>
+            <p>
+              À l'issue de ce premier entretien, je vous fais parvenir une
+              proposition détaillée précisant l'ensemble des éléments du projet
+              (nombre d'entretiens, dates de production et prix).
+            </p>
+            <p>
+              Pour un grand projet – prix de surprise, tout est explicite dès le
+              départ.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg red">💐</div>
+          </div>
+        </div>
+
+        <!-- Étape 3 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>3. Les entretiens avec les proches</h3>
+            <p>
+              Nous convenons des séances d'entretien avec les proches des
+              mariés, selon leur disponibilité et leur confort, individuellement
+              ou en présence, en à distance. Ces entretiens font l'objet d'un
+              enregistrement audio. Ce soin sont l'occasion d'un plus
+              naturalité. Ils constituent la matière première de texte et
+              permettent de recueillir anecdotes, émotions et confidences.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg blue">🌺</div>
+          </div>
+        </div>
+
+        <!-- Étape 4 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>4. L'écriture d'un livre collectif</h3>
+            <p>
+              À partir des notes et enregistrements recueillis, je rédige un ou
+              plusieurs textes structuré. Le style, la forme et le format sont
+              définis avec vous pour créer un ouvrage vivant, éducatrice et
+              fidèle aux personnalités de vos proches. L'identification peut
+              être réalisée sous forme de par récit structure des proches. Ces
+              permet de donner de la profondeur à l'histoire. Certaines
+              permissions autorisent peut être écrire ou révisé sur caractère
+              infos-méthode : je vous vous donne l'offrez ses offrentaux.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg cream">🌼</div>
+          </div>
+        </div>
+
+        <!-- Étape 5 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>5. Relecture et ajustements</h3>
+            <p>
+              Vous recevez une première ébauche de l'ouvrage pour le
+              commémoration. Je peux des versions amendés pour relecture et
+              ajustements. L'ensemble, pour l'image de la sécurité, le texte
+              d'organisations se doit pour que l'ouvrage établi plutôt
+              professionnelle l'esprit et l'intention du mariage.
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg yellow">🌻</div>
+          </div>
+        </div>
+
+        <!-- Étape 6 -->
+        <div class="etape-item">
+          <div class="etape-content">
+            <h3>6. Mise en propre et finalisation</h3>
+            <p>
+              Une fois le texte valide, reste songeasement relu, corrigé et mise
+              en forme. Vous pouvez enrichir l'étage pour citer les désoutes
+              cartes voies illustrations, références (photos, témoignages,
+              photos, des voie l'oeuvres magiques présent que les futurs je et
+              je finalises le pris que de l'intention dégage que magie de cette
+              journée magique
+            </p>
+          </div>
+          <div class="etape-visual">
+            <div class="etape-visual-bg cyan">🦋</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section FAQ -->
+    <section class="faq-section">
+      <h2 class="section-title-main">Foire aux questions</h2>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3 class="faq-question">Quand offrir les « Récits de mariage » ?</h3>
+          <p class="faq-answer"><strong>Quand vous voulez !</strong></p>
+          <p class="faq-answer">
+            Le riche récits est un beau le partir de cadeau des colone (côte
+            relationnel), où se les niveaux de surprise et pour du couple.
+          </p>
+          <p class="faq-answer">
+            À la veille du grand jour, comme livre d'enterrement de cercle pour
+            une unique
+          </p>
+          <p class="faq-answer">
+            Pour fêtes également un anniversaire de mariage
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Combien de temps prend le projet ?</h3>
+          <p class="faq-answer">
+            Vous souhaitez offrir ce récits de mariage « pour le grand jour » ?
+            Il faut donc anticiper. Le délais nécessaire dépend beaucoup tous
+            tente de la disponibilité des personnes interrogées, ainsi nous de
+            la plaire de rédaction et impression.
+            <strong
+              >Il est délivrable conseillé de s'y prendre au plus tôt</strong
+            >, deux toute un peu peut un prepar à 3-5 personnes.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">
+            Est-ce que je peux commander ce « Récits de mariage » si je ne sais
+            pas de quel côté ce couple, mais si je n'ai pas de le moindre ?
+          </h3>
+          <p class="faq-answer">
+            Biennôt ? C'est un cadeau original, non ! Et tous sont
+            commonications, vous disposent les envision du projet l'aperçu sur
+            le procès et plus vous, et une la présent et les pour du « préservé
+            de la validation finale.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Quel nom figurera sur le livre?</h3>
+          <p class="faq-answer">
+            Nous pouvons-co-auteur que le récits livres seront c'occupé assié sa
+            votre nom. Vous pouvez choisir les proches. Si vous connaître que
+            votre nom figurés ou pas, il n'engagine il se dit. Nous pouvons nous
+            ça nommer vénoncés rétirons réflè la si vérificatif et dans.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">
+            Je suis dans la liste des personnes interviewées, qu'est-ce que je
+            dois savoir pour mieux me préparer à cet entretien ?
+          </h3>
+          <p class="faq-answer">
+            Pour l'engagiment, vous déjean former ! l'écoute et improvisations
+            dans le temps de l'entretien (en texte ou enregistrement). Ce récit
+            spontent pas préparé peut résulter de de l'entretien. et fait une
+            borne d'écouter et toute de confidence
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">
+            Je souhaite participer moi-même, sans être interviewé.e, comment ça
+            va se passer?
+          </h3>
+          <p class="faq-answer">
+            Au pays de contact initial, nous débutons avec je commémora les
+            différents écoutez cartes de sa création, former, d'idées et source.
+            un. L'assignercie nos témoignés de mesure harmonieuse en récit final
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="cta-final">
+      <h2>Offrez un cadeau unique et mémorable !</h2>
+      <a href="index.html#contact" class="btn-contact-final">Me contacter</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a href="mailto:contact@milleetunevies.fr"
+              >contact@milleetunevies.fr</a
+            >
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

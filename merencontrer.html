@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Me rencontrer - Mille et une vies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+        --navy-blue: #1b3a6b;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+      }
+
+      /* Navbar - même que index.html */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Hero Section avec photo */
+      .hero-about {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+      }
+
+      .hero-content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        color: var(--primary-blue);
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .intro-section {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 4rem;
+        align-items: start;
+        margin-bottom: 4rem;
+      }
+
+      .profile-image {
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        position: sticky;
+        top: 120px;
+      }
+
+      .intro-text {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .intro-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .intro-text p:first-child {
+        font-size: 1.15rem;
+        font-weight: 400;
+      }
+
+      .intro-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Blockquotes Section */
+      .quotes-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .quote-block {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 3rem;
+        position: relative;
+        border-left: 5px solid var(--accent-teal);
+      }
+
+      .quote-block::before {
+        content: '"';
+        font-family: "Playfair Display", serif;
+        font-size: 6rem;
+        color: var(--accent-teal);
+        opacity: 0.2;
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        line-height: 1;
+      }
+
+      .quote-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+      }
+
+      .quote-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1rem;
+      }
+
+      .quote-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .quote-text em {
+        font-style: italic;
+        color: var(--accent-teal);
+      }
+
+      /* Section bleue avec boutons */
+      .cta-buttons-section {
+        background: linear-gradient(
+          135deg,
+          var(--navy-blue) 0%,
+          var(--primary-blue) 100%
+        );
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+
+      .cta-buttons-container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .cta-buttons-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .cta-btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: white;
+        color: var(--primary-blue);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        background: var(--accent-teal);
+        color: white;
+      }
+
+      /* Section formations */
+      .formations-section {
+        background: var(--navy-blue);
+        padding: 4rem 2rem;
+        border-radius: 50px;
+        max-width: 1200px;
+        margin: -3rem auto 4rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .formations-content {
+        color: white;
+      }
+
+      .formations-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+      }
+
+      .formations-content strong {
+        font-weight: 600;
+      }
+
+      /* Section contact */
+      .contact-info-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+      }
+
+      .contact-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .contact-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--accent-teal);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.8rem;
+      }
+
+      .contact-card h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+      }
+
+      .contact-card p {
+        font-size: 1.05rem;
+        color: var(--dark-text);
+        line-height: 1.6;
+      }
+
+      .contact-card a {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .contact-card a:hover {
+        color: var(--accent-teal);
+      }
+
+      /* Footer - même que index.html */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .intro-section {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .profile-image {
+          position: relative;
+          top: 0;
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .intro-text {
+          padding: 2rem;
+        }
+
+        .quote-block {
+          padding: 2rem;
+        }
+
+        .quote-title {
+          font-size: 1.5rem;
+        }
+
+        .cta-buttons-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .formations-section {
+          border-radius: 30px;
+          padding: 3rem 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body id="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="./index.html">Accueil</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section avec présentation -->
+    <section class="hero-about">
+      <div class="hero-content-wrapper">
+        <h1 class="hero-title">Rencontrons nous !</h1>
+
+        <div class="intro-section">
+          <img src="./public/photo.jpeg" alt="Marion" class="profile-image" />
+
+          <div class="intro-text">
+            <p><strong>Bonjour, je suis Marion.</strong></p>
+            <p>
+              Je suis… <strong>docteure en droit</strong>. Oui, il y a plus
+              poétique… Pendant des années, j'ai architecturé ma thèse relative
+              au <strong>Care</strong> (Prendre soin), publié des articles
+              universitaires, décortiqué des jurisprudences… J'ai appris l'art
+              de la <strong>recherche minutieuse</strong>, de la
+              <strong>structure irréprochable</strong>, de la
+              <strong>justesse du mot</strong>.
+            </p>
+
+            <h3 class="quote-title">Rigueur, vous avez dit rigueur?</h3>
+            <p>
+              Si je peux bâtir une analyse sur un arrêt de la Cour de Cassation,
+              je peux assurément structurer un récit
+              <strong>embellificotié</strong>, ordonner rigoureusement vos
+              archives, collecter des données historiques, culturelles,
+              sociologiques…
+              <strong>Bref donner à votre projet structure et clarté</strong>.
+            </p>
+
+            <p>
+              J'ai cependant décidé de me consacrer à une activité plus humaine,
+              fondée sur <strong>la rencontre</strong> et
+              <strong>la bienveillance</strong>.
+            </p>
+
+            <p>
+              Et, entre nous, je préfère <strong>MILLE</strong> fois écrire
+              votre histoire qu'un commentaire d'arrêt…
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blockquotes -->
+    <section class="quotes-section">
+      <div class="quote-block">
+        <h2 class="quote-title">"Qui parle sème ; qui écoute récolte"</h2>
+        <p class="quote-text">
+          Mon parcours associatif d'accompagnement social m'a montré sur un
+          terrain où l'écoute est vitale. L'œil pas toujours sec et la main pas
+          toujours sûre, j'ai entendu des histoires, souvent bouleversant, et
+          transformer une <strong>confiance</strong> immense en un récit juste,
+          respectueux et percutant. J'ai été formée à
+          <strong>l'écoute active</strong>, aux
+          <strong>techniques d'entretien</strong>, à
+          <strong>recueillir les récits invisibles</strong>, à accueillir les
+          émotions, et témoignages les plus délicats avec bienveillance.
+        </p>
+
+        <p class="quote-text">
+          Quand je vous écoute, c'est
+          <strong>la rigueur de la juriste</strong> et
+          <strong>l'empathie d'une oreille amie</strong> qui
+          <em>s'unissent</em> pour donner à votre témoignage toute sa
+          légitimité, sa dignité et sa force.
+        </p>
+
+        <p class="quote-text">
+          J'ai fait mes premières armes il y a plus de 10 ans avec le plus beau
+          des sujets : ma grand-mère de cœur.
+        </p>
+      </div>
+
+      <div class="quote-block">
+        <h2 class="quote-title">Merci Mamie...</h2>
+        <p class="quote-text">
+          Bien plus que <em>j'ai écrit la biographie</em>,
+          <strong>j'ai rencontré</strong> : rencontré son histoire, et avec tout
+          le temps passé à l'écouter en 1 : 1 qu'elle disait… Son histoire ?
+          C'est véritable un roman : le Nord, la 2e guerre mondiale,
+          l'expropriation, les grèves ouvrières… mais aussi et surtout l'Amour
+          de sa vie + son sourire éternel et son énergie qui ont décidé du cours
+          des recherches historiques, j'ai compris la puissance du témoignage
+          qui permet au lecteur le « résultat », d'être touchée, et peut la
+          grandeur des « petites » histoires.
+        </p>
+
+        <p class="quote-text">
+          C'est cette même <strong>capacité de rencontre</strong>, cette
+          <strong>empathie</strong>, que
+          <em>j'apporterai à VOTRE biographie</em>.
+        </p>
+      </div>
+
+      <div class="quote-block">
+        <h2 class="quote-title">J'ai du style... mais je vous laisse !</h2>
+        <p class="quote-text">
+          Maintenant, parlons plume. Est-ce que ma façon d'écrire sera à la
+          hauteur de votre épopée ?
+        </p>
+
+        <p class="quote-text">
+          Vous pouvez juger dans un échantillon de la vingtaine de concours de
+          nouvelles remportées ces trois dernières années.
+        </p>
+
+        <p class="quote-text">
+          Mais, dans votre projet, mon style sera <strong>le vôtre</strong> ! Je
+          respecte votre choix de tonalité, et vous, le
+          <strong>découvrirai</strong>… Pouf !
+        </p>
+        <p class="quote-text">
+          <a
+            href="echantillon.html"
+            class="cta-btn"
+            style="display: inline-block; margin-top: 1rem"
+            >Voir l'échantillon</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- Section CTA avec boutons -->
+    <section class="cta-buttons-section">
+      <div class="cta-buttons-container">
+        <div class="cta-buttons-grid">
+          <a href="./biographie.html" class="cta-btn">Biographies</a>
+          <a href="./echantillon.html" class="cta-btn">Nouvelles primées</a>
+          <a href="./atelier.html" class="cta-btn">Ateliers d'écriture</a>
+          <a href="#projet" class="cta-btn">Projet sur mesure</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Formations -->
+    <section class="formations-section">
+      <div class="formations-content">
+        <p>
+          <strong>Formation à l'Atelier d'écriture</strong> – L'écriture en
+          atelier, Module 1 et 2, ALEPH
+        </p>
+        <p>
+          <strong>Formation générale à l'écriture littéraire</strong>, Module 3,
+          ALEPH
+        </p>
+        <p>
+          <strong
+            >Formations Techniques d'entretien, Écoute active, Communication non
+            violente</strong
+          >, SOFOR
+        </p>
+        <p><strong>Séminaire en santé mentale (PSSM)</strong></p>
+      </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section class="contact-info-section">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h3>Lieux d'intervention</h3>
+        <p>Bordeaux, Nice, Paris, Rennes</p>
+        <p>et à distance</p>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h3>Contact</h3>
+        <p>06 66 98 54 94</p>
+        <p>
+          <a href="mailto:marion@1000etunevies.fr">marion@1000etunevies.fr</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a href="mailto:contact@milleetunevies.fr"
+              >contact@milleetunevies.fr</a
+            >
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

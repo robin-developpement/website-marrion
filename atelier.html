@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ateliers d'écriture - Mille et une vies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500&family=Lato:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #4a5f7f;
+        --accent-coral: #e8a598;
+        --accent-teal: #6db3b8;
+        --light-bg: #f5f7fa;
+        --cream: #faf8f5;
+        --dark-text: #2c3e50;
+        --light-text: #6b7280;
+        --navy-blue: #1b3a6b;
+      }
+
+      body {
+        font-family: "Lato", sans-serif;
+        color: var(--dark-text);
+        line-height: 1.6;
+        background-color: var(--cream);
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--cream);
+        padding: 1.2rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(250, 248, 245, 0.98);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .nav-logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .nav-logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-size: 1rem;
+        font-weight: 400;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-menu li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-teal);
+        transition: width 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: var(--primary-blue);
+      }
+
+      .nav-menu li a:hover::after {
+        width: 100%;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001;
+      }
+
+      .hamburger span {
+        width: 28px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      @media (max-width: 968px) {
+        .hamburger {
+          display: flex;
+        }
+
+        .nav-menu {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          height: 100vh;
+          width: 300px;
+          background-color: white;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 6rem 2rem 2rem;
+          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow-y: auto;
+          gap: 1.5rem;
+        }
+
+        .nav-menu.active {
+          right: 0;
+        }
+
+        .nav-menu li {
+          width: 100%;
+        }
+
+        .nav-menu li a {
+          display: block;
+          padding: 0.8rem 0;
+          font-size: 1.1rem;
+        }
+      }
+
+      /* Hero Section */
+      .hero-ateliers {
+        margin-top: 80px;
+        padding: 4rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        color: var(--primary-blue);
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      /* Section Atelier */
+      .atelier-section {
+        padding: 4rem 2rem;
+        background: white;
+      }
+
+      .atelier-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 500px;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .atelier-text h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--primary-blue);
+        margin-bottom: 2rem;
+        line-height: 1.3;
+      }
+
+      .atelier-text p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .atelier-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .atelier-list {
+        list-style: none;
+        margin: 2rem 0;
+      }
+
+      .atelier-list li {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+        position: relative;
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+
+      .atelier-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--accent-teal);
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .atelier-list strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .atelier-sidebar {
+        background: var(--light-bg);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 120px;
+      }
+
+      .sidebar-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+      }
+
+      .sidebar-text {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      /* Section Universitaires */
+      .universitaires-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--light-bg) 0%,
+          var(--cream) 100%
+        );
+      }
+
+      .section-title-main {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: var(--primary-blue);
+        text-align: center;
+        margin-bottom: 3rem;
+        line-height: 1.3;
+      }
+
+      .universitaires-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .universitaires-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .universitaires-content strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .universitaires-content em {
+        font-style: italic;
+        color: var(--primary-blue);
+      }
+
+      /* Section Anniversaire */
+      .anniversaire-section {
+        padding: 6rem 2rem;
+        background: white;
+      }
+
+      .anniversaire-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 500px 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .anniversaire-sidebar {
+        background: var(--light-bg);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 120px;
+      }
+
+      .anniversaire-text h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: var(--primary-blue);
+        margin-bottom: 2rem;
+      }
+
+      .anniversaire-text h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+        margin: 2rem 0 1rem;
+        font-style: italic;
+      }
+
+      .anniversaire-text p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 1.5rem;
+      }
+
+      .anniversaire-text strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Section CTA */
+      .cta-final {
+        background: linear-gradient(135deg, var(--navy-blue) 0%, #2a4a7f 100%);
+        padding: 5rem 2rem;
+        text-align: center;
+      }
+
+      .cta-final h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 2rem;
+      }
+
+      .btn-contact-final {
+        display: inline-block;
+        padding: 1.2rem 3rem;
+        background: white;
+        color: var(--navy-blue);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-contact-final:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        background: var(--accent-teal);
+        color: white;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-text);
+        color: white;
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 2;
+        display: block;
+      }
+
+      .footer-section a:hover {
+        color: var(--accent-teal);
+      }
+
+      .footer-icon {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Responsive */
+      @media (max-width: 968px) {
+        .atelier-content,
+        .anniversaire-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .atelier-sidebar,
+        .anniversaire-sidebar {
+          position: relative;
+          top: 0;
+        }
+
+        .anniversaire-content {
+          grid-template-columns: 1fr;
+        }
+
+        .anniversaire-sidebar {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body class="home">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="./index.html" class="nav-logo">
+          <span class="nav-logo-text">Justine Vaux Biographe</span>
+        </a>
+
+        <ul class="nav-menu">
+          <li><a href="./index.html">Accueil</a></li>
+          <li class="">
+            <a href="#contact">(S') Offrir une biographie</a>
+          </li>
+          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-ateliers">
+      <h1 class="hero-title">Ateliers d'écriture</h1>
+    </section>
+
+    <!-- Section Les Ateliers du Mardi -->
+    <section class="atelier-section">
+      <div class="atelier-content">
+        <div class="atelier-text">
+          <p>
+            Et si l'écriture devenait votre parenthèse hebdomadaire creative ?
+          </p>
+          <p>
+            Cet atelier propose de (re)trouver le plaisir d'<strong
+              >écrire</strong
+            >
+            dans la convivialité.
+          </p>
+          <p>
+            <strong>Par l'écriture, on se rencontre différemment...</strong> Ce
+            moment devient rapidement un rituel, où l'on vient pour le
+            <strong>plaisir de se retrouver</strong> autant que pour le texte
+            composé.
+          </p>
+
+          <ul class="atelier-list">
+            <li>
+              <strong>Créativité sans filtre.</strong> Guidé·e à pas une
+              manœuvre privilégiant l'excente et l'accompagnement discret, vous
+              explorez des thèmes variés (imaginaire, absurde, poésie...)
+            </li>
+            <li>
+              <strong>Pas de pression !</strong> Pas besoin d'être un·e
+              écrivain·e chevronné·e, ni de maîtriser les règles orthographiques
+              ou de grammaire qui la barres parabolique (même si, au passage, on
+              peut apprendre comme en est, pour
+              <strong>partager un univers</strong>, et
+              <strong>s'amuser</strong>.
+            </li>
+          </ul>
+        </div>
+
+        <div class="atelier-sidebar">
+          <h3 class="sidebar-title">Les Ateliers du Mardi (du Jeudi...)</h3>
+          <p class="sidebar-text">
+            Et si l'écriture devenait votre parenthèse hebdomadaire créative ?
+          </p>
+          <p class="sidebar-text">
+            Cet atelier proposé de (re)trouver le plaisir d'écrire dans la
+            convivialité.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Des Ateliers universitaires -->
+    <section class="universitaires-section">
+      <h2 class="section-title-main">
+        Des Ateliers universitaires autour de la Science fiction...
+      </h2>
+
+      <div class="universitaires-content">
+        <p>
+          À l'occasion de séminaires sur les nouvelles conflictualités, les
+          enseignants-chercheurs de l'Université Côte d'Azur ont inventé à
+          plusieurs mains leur roman <strong>anticipation</strong>.
+        </p>
+
+        <p>
+          Mais qu'est-là réellement créé ? Un professeur infaillible, un outil
+          de paix, ou une machine de guerre dont l'existence même menace
+          l'équilibre du monde ?
+        </p>
+
+        <p>
+          L'occasion d'exercer son <strong>imagination</strong> avec la
+          science-fiction, en mobilisant ses connaissances universitaires autant
+          que son <strong>esprit critique</strong>...
+        </p>
+      </div>
+    </section>
+
+    <!-- Section Les Ateliers d'anniversaire -->
+    <section class="anniversaire-section">
+      <h2 class="section-title-main">Les Ateliers d'anniversaire</h2>
+
+      <div class="anniversaire-content">
+        <div class="anniversaire-sidebar">
+          <h3 class="sidebar-title">Les Ateliers d'anniversaire</h3>
+          <p class="sidebar-text"><strong>Une histoire et magie...</strong></p>
+        </div>
+
+        <div class="anniversaire-text">
+          <p>
+            À l'occasion d'un anniversaire, les petits et d'Jeunes, il ans, ont
+            découvert ensemble les secrets de la sorcière... et ont donné vie à
+            leur récit en concoctant une potion magique un peu relexe !
+          </p>
+
+          <p>
+            Un atelier où les mots deviennent jeu, où
+            <strong>l'imaginaire déborde</strong> du quotidien, où l'univers se
+            transforme en aventure inoubliable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="cta-final">
+      <h2>Envie de créer ensemble?</h2>
+      <a href="index.html#contact" class="btn-contact-final">Contact</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Mille et une vies</h3>
+          <p>Écrite d'accompagnement</p>
+          <p>Biographe, Rédac, Paris</p>
+          <p>Nathalie Bienfait</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>
+            <span class="footer-icon">📧</span>
+            <a href="mailto:contact@milleetunevies.fr"
+              >contact@milleetunevies.fr</a
+            >
+          </p>
+          <p>
+            <span class="footer-icon">📞</span>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>CGU</h3>
+          <a href="#">Mentions légales</a>
+          <a href="#">Mes Engagements</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Menu hamburger toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      });
+
+      // Fermer le menu quand on clique sur un lien
+      document.querySelectorAll(".nav-menu li a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Fermer le menu quand on clique en dehors
+      document.addEventListener("click", (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+          hamburger.classList.remove("active");
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Effet de scroll sur la navbar
+      const navbar = document.querySelector(".navbar");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>
