@@ -410,51 +410,105 @@
       }
 
       /* Footer */
+      /* Footer */
       footer {
-        background: var(--dark-text);
-        color: white;
-        padding: 4rem 2rem 2rem;
+        background: white;
+        color: var(--dark-text);
+        padding: 4rem 2rem;
+        border-top: 1px solid #e5e7eb;
       }
 
       .footer-content {
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 3rem;
-        margin-bottom: 3rem;
+        grid-template-columns: 1fr 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
       }
 
-      .footer-section h3 {
+      .footer-logo {
         font-family: "Playfair Display", serif;
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-bottom: 0;
       }
 
-      .footer-section p,
-      .footer-section a {
-        color: rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        line-height: 2;
-        display: block;
+      .footer-links {
+        display: flex;
+        gap: 3rem;
+        align-items: center;
       }
 
-      .footer-section a:hover {
-        color: var(--accent-teal);
+      .footer-links a {
+        color: var(--dark-text);
+        text-decoration: underline;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary-blue);
+      }
+
+      .footer-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .footer-info-title {
+        font-weight: 600;
+        color: var(--dark-text);
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .footer-info p {
+        color: var(--dark-text);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .footer-info a {
+        color: var(--dark-text);
+        text-decoration: underline;
+        transition: color 0.3s ease;
+      }
+
+      .footer-info a:hover {
+        color: var(--primary-blue);
       }
 
       .footer-icon {
-        display: inline-block;
+        width: 24px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 50%;
         margin-right: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .footer-contact-image {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .footer-contact-image img {
+        max-width: 100%;
+        height: auto;
       }
 
       .footer-bottom {
-        text-align: center;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.6);
+        display: none;
       }
-
       /* Responsive */
       @media (max-width: 968px) {
         .hero-intro {
@@ -522,69 +576,16 @@
       <div class="hero-intro">
         <div class="hero-image-wrapper">
           <div class="hero-image">
-            <svg
-              class="floral-art"
-              viewBox="0 0 300 350"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <!-- Fleurs stylisées en noir et blanc -->
-              <g fill="none" stroke="#2C3E50" stroke-width="2">
-                <!-- Feuille gauche -->
-                <path
-                  d="M 80 40 Q 60 80 50 120 Q 40 160 35 200"
-                  stroke-width="3"
-                />
-                <ellipse
-                  cx="45"
-                  cy="80"
-                  rx="15"
-                  ry="40"
-                  transform="rotate(-30 45 80)"
-                />
-                <ellipse
-                  cx="40"
-                  cy="140"
-                  rx="12"
-                  ry="35"
-                  transform="rotate(-20 40 140)"
-                />
-
-                <!-- Fleurs centrales -->
-                <path d="M 150 30 L 150 300" stroke-width="4" />
-
-                <!-- Grappe de fleurs -->
-                <circle cx="150" cy="80" r="8" fill="#2C3E50" />
-                <circle cx="140" cy="95" r="7" fill="#2C3E50" />
-                <circle cx="160" cy="95" r="7" fill="#2C3E50" />
-                <circle cx="145" cy="110" r="6" fill="#2C3E50" />
-                <circle cx="155" cy="110" r="6" fill="#2C3E50" />
-                <circle cx="150" cy="125" r="8" fill="#2C3E50" />
-                <circle cx="138" cy="130" r="6" fill="#2C3E50" />
-                <circle cx="162" cy="130" r="6" fill="#2C3E50" />
-                <circle cx="148" cy="145" r="7" fill="#2C3E50" />
-                <circle cx="152" cy="145" r="7" fill="#2C3E50" />
-
-                <!-- Feuille droite -->
-                <path
-                  d="M 220 50 Q 240 90 250 130 Q 260 170 265 210"
-                  stroke-width="3"
-                />
-                <ellipse
-                  cx="255"
-                  cy="90"
-                  rx="15"
-                  ry="40"
-                  transform="rotate(30 255 90)"
-                />
-                <ellipse
-                  cx="260"
-                  cy="150"
-                  rx="12"
-                  ry="35"
-                  transform="rotate(20 260 150)"
-                />
-              </g>
-            </svg>
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2025/12/unnamed-4-edited-4.jpeg"
+              alt="Récit de mariage"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 10px;
+              "
+            />
           </div>
         </div>
         <div class="hero-text">
@@ -618,7 +619,13 @@
             </p>
           </div>
           <div class="etape-visual">
-            <div class="etape-visual-bg pink">🌸</div>
+            <div class="etape-visual-bg pink">
+              <img
+                src="https://1000etunevies.fr/wp-content/uploads/2025/12/Design-sans-titre-33-2-edited-768x1024.png"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -637,7 +644,13 @@
             </p>
           </div>
           <div class="etape-visual">
-            <div class="etape-visual-bg red">💐</div>
+            <div class="etape-visual-bg pink">
+              <img
+                src="https://1000etunevies.fr/wp-content/uploads/2025/12/Design-sans-titre-34-2-edited-768x1024.png"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -655,7 +668,13 @@
             </p>
           </div>
           <div class="etape-visual">
-            <div class="etape-visual-bg blue">🌺</div>
+            <div class="etape-visual-bg pink">
+              <img
+                src="https://1000etunevies.fr/wp-content/uploads/2025/12/Design-sans-titre-36-1-edited-1-768x1024.png"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -675,7 +694,13 @@
             </p>
           </div>
           <div class="etape-visual">
-            <div class="etape-visual-bg cream">🌼</div>
+            <div class="etape-visual-bg pink">
+              <img
+                src="https://1000etunevies.fr/wp-content/uploads/2025/12/unnamed-4-edited-3.jpeg"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -692,7 +717,13 @@
             </p>
           </div>
           <div class="etape-visual">
-            <div class="etape-visual-bg yellow">🌻</div>
+            <div class="etape-visual-bg pink">
+              <img
+                src="https://1000etunevies.fr/wp-content/uploads/2025/12/Design-sans-titre-32-edited-1-768x1024.png"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -710,7 +741,13 @@
             </p>
           </div>
           <div class="etape-visual">
-            <div class="etape-visual-bg cyan">🦋</div>
+            <div class="etape-visual-bg pink">
+              <img
+                src="https://1000etunevies.fr/wp-content/uploads/2025/12/Design-sans-titre-41-2-edited-2-768x1024.png"
+                alt=""
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -809,36 +846,25 @@
     <!-- Footer -->
     <footer>
       <div class="footer-content">
-        <div class="footer-section">
-          <h3>Mille et une vies</h3>
-          <p>Écrite d'accompagnement</p>
-          <p>Biographe, Rédac, Paris</p>
-          <p>Nathalie Bienfait</p>
+        <div class="footer-logo-section">
+          <h2 class="footer-logo">Mille et une vies</h2>
         </div>
 
-        <div class="footer-section">
-          <h3>Contact</h3>
-          <p>
-            <span class="footer-icon">📧</span>
-            <a href="mailto:contact@milleetunevies.fr"
-              >contact@milleetunevies.fr</a
-            >
-          </p>
-          <p>
-            <span class="footer-icon">📞</span>
-            <a href="tel:+33123456789">01 23 45 67 89</a>
-          </p>
-        </div>
-
-        <div class="footer-section">
-          <h3>CGU</h3>
+        <div class="footer-links">
           <a href="#">Mentions légales</a>
+          <a href="#">CGU</a>
           <a href="#">Mes Engagements</a>
         </div>
-      </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+        <div
+          class="footer-contact-image display: flex; align-items: center; justify-content: flex-end"
+        >
+          <img
+            src="./public/contacts.png"
+            alt="Lieux d'intervention et Contact"
+            style="width: 100%; height: auto"
+          />
+        </div>
       </div>
     </footer>
 

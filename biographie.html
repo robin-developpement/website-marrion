@@ -24,18 +24,19 @@
         --dark-text: #2c3e50;
         --light-text: #6b7280;
         --navy-blue: #1b3a6b;
+        --cyan-light: #d4e4e8;
       }
 
       body {
         font-family: "Lato", sans-serif;
         color: var(--dark-text);
         line-height: 1.6;
-        background-color: var(--cream);
+        background-color: white;
       }
 
       /* Navbar */
       .navbar {
-        background-color: var(--cream);
+        background-color: white;
         padding: 1.2rem 2rem;
         position: fixed;
         top: 0;
@@ -43,12 +44,6 @@
         right: 0;
         z-index: 1000;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-      }
-
-      .navbar.scrolled {
-        background-color: rgba(250, 248, 245, 0.98);
-        backdrop-filter: blur(10px);
       }
 
       .nav-container {
@@ -60,22 +55,11 @@
       }
 
       .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        text-decoration: none;
-      }
-
-      .nav-logo-icon {
-        width: 50px;
-        height: 50px;
-      }
-
-      .nav-logo-text {
         font-family: "Playfair Display", serif;
         font-size: 1.4rem;
         color: var(--primary-blue);
         font-weight: 600;
+        text-decoration: none;
       }
 
       .nav-menu {
@@ -89,152 +73,84 @@
         text-decoration: none;
         color: var(--dark-text);
         font-size: 1rem;
-        font-weight: 400;
         transition: color 0.3s ease;
-        position: relative;
-      }
-
-      .nav-menu li a::after {
-        content: "";
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: var(--accent-teal);
-        transition: width 0.3s ease;
       }
 
       .nav-menu li a:hover {
         color: var(--primary-blue);
       }
 
-      .nav-menu li a:hover::after {
-        width: 100%;
-      }
-
-      .hamburger {
-        display: none;
-        flex-direction: column;
-        cursor: pointer;
-        gap: 5px;
-        z-index: 1001;
-      }
-
-      .hamburger span {
-        width: 28px;
-        height: 3px;
-        background-color: var(--primary-blue);
-        border-radius: 3px;
-        transition: all 0.3s ease;
-      }
-
-      .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(8px, 8px);
-      }
-
-      .hamburger.active span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
-      }
-
-      @media (max-width: 968px) {
-        .hamburger {
-          display: flex;
-        }
-
-        .nav-menu {
-          position: fixed;
-          top: 0;
-          right: -100%;
-          height: 100vh;
-          width: 300px;
-          background-color: white;
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 6rem 2rem 2rem;
-          box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-          transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          overflow-y: auto;
-          gap: 1.5rem;
-        }
-
-        .nav-menu.active {
-          right: 0;
-        }
-
-        .nav-menu li {
-          width: 100%;
-        }
-
-        .nav-menu li a {
-          display: block;
-          padding: 0.8rem 0;
-          font-size: 1.1rem;
-        }
-      }
-
       /* Hero Section */
-      .hero-bio {
+      .hero-section {
         margin-top: 80px;
-        padding: 4rem 2rem;
-        background: linear-gradient(
-          135deg,
-          var(--light-bg) 0%,
-          var(--cream) 100%
-        );
+        padding: 3rem 2rem;
+        background: white;
       }
 
-      .hero-title {
+      .page-title {
         font-family: "Playfair Display", serif;
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-size: 2rem;
         color: var(--primary-blue);
         margin-bottom: 3rem;
-        text-align: center;
-      }
-
-      /* Section Hero avec image */
-      .hero-intro {
+        text-align: left;
         max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 400px 1fr;
-        gap: 3rem;
-        align-items: center;
-        background: white;
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .hero-image-wrapper {
-        width: 100%;
+      .hero-banner {
+        max-width: 1200px;
+        margin: 0 auto 4rem;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+        background: var(--cyan-light);
+        border-radius: 10px;
+        overflow: hidden;
       }
 
       .hero-image {
         width: 100%;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        height: 250px;
+        object-fit: cover;
       }
 
-      .hero-text h2 {
-        font-family: "Playfair Display", serif;
-        font-size: 1.8rem;
-        color: var(--primary-blue);
-        margin-bottom: 1.5rem;
+      .hero-text {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       .hero-text p {
-        font-size: 1.05rem;
+        font-size: 1.5rem;
         line-height: 1.8;
+        color: var(--dark-text);
+      }
+
+      /* Intro Section */
+      .intro-section {
+        max-width: 1200px;
+        margin: 0 auto 4rem;
+        padding: 0 2rem;
+        text-align: center;
+      }
+
+      .intro-title {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
         color: var(--dark-text);
         margin-bottom: 1.5rem;
       }
 
-      .btn-decouvrir {
+      .intro-text {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--dark-text);
+        margin-bottom: 2rem;
+      }
+
+      .intro-button {
         display: inline-block;
         padding: 1rem 2.5rem;
         background: var(--navy-blue);
@@ -242,150 +158,97 @@
         text-decoration: none;
         border-radius: 50px;
         font-weight: 600;
-        font-size: 1rem;
         transition: all 0.3s ease;
-        margin-top: 1rem;
       }
 
-      .btn-decouvrir:hover {
-        background: var(--primary-blue);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      .intro-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(27, 58, 107, 0.3);
       }
 
-      /* Section Comment se déroule */
-      .deroulement-section {
-        padding: 6rem 2rem;
-        background: white;
-      }
-
-      .section-title-main {
+      /* Section Title */
+      .section-title {
         font-family: "Playfair Display", serif;
-        font-size: clamp(2rem, 4vw, 2.8rem);
-        color: var(--primary-blue);
+        font-size: 1.8rem;
+        color: var(--dark-text);
+        margin-bottom: 3rem;
         text-align: center;
-        margin-bottom: 4rem;
       }
 
-      .etapes-grid {
-        max-width: 1400px;
+      /* Cards Grid */
+      .cards-grid {
+        max-width: 1200px;
         margin: 0 auto;
+        padding: 4rem 2rem;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 3rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
       }
 
-      .etape-card {
-        background: linear-gradient(135deg, var(--light-bg) 0%, white 100%);
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      .service-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
-        position: relative;
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .card-image-wrapper {
+        height: 200px;
         overflow: hidden;
       }
 
-      .etape-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 5px;
+      .card-image {
+        width: 100%;
         height: 100%;
-        background: var(--accent-teal);
+        object-fit: cover;
       }
 
-      .etape-card:nth-child(2)::before {
-        background: var(--accent-coral);
+      .card-content {
+        padding: 2rem;
       }
 
-      .etape-card:nth-child(3)::before {
-        background: #9b7ebd;
-      }
-
-      .etape-card:nth-child(4)::before {
-        background: #ff6b9d;
-      }
-
-      .etape-card:nth-child(5)::before {
-        background: #87ceeb;
-      }
-
-      .etape-card:nth-child(6)::before {
-        background: #ffb347;
-      }
-
-      .etape-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
-      }
-
-      .etape-icon {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 1.5rem;
-        font-size: 3rem;
-      }
-
-      .etape-title {
+      .card-title {
         font-family: "Playfair Display", serif;
-        font-size: 1.6rem;
-        color: var(--primary-blue);
+        font-size: 1.3rem;
+        color: var(--dark-text);
         margin-bottom: 1rem;
-        font-weight: 600;
       }
 
-      .etape-description {
-        font-size: 1rem;
-        line-height: 1.8;
+      .card-text {
+        font-size: 0.95rem;
+        line-height: 1.7;
         color: var(--dark-text);
       }
 
-      /* Section Combien ça coûte */
+      /* Pricing Section */
       .pricing-section {
-        padding: 6rem 2rem;
-        background: linear-gradient(
-          135deg,
-          var(--light-bg) 0%,
-          var(--cream) 100%
-        );
-      }
-
-      .pricing-content {
         max-width: 1200px;
-        margin: 0 auto;
+        margin: 4rem auto;
+        padding: 0 2rem;
+      }
+
+      .pricing-banner {
         display: grid;
-        grid-template-columns: 400px 1fr;
-        gap: 3rem;
-        align-items: center;
-      }
-
-      .pricing-image-wrapper {
-        width: 100%;
-      }
-
-      .pricing-image {
-        width: 100%;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
       }
 
       .pricing-text {
-        background: white;
-        padding: 3rem;
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      }
-
-      .pricing-text h2 {
-        font-family: "Playfair Display", serif;
-        font-size: 2rem;
-        color: var(--primary-blue);
-        margin-bottom: 1.5rem;
+        padding: 2rem;
       }
 
       .pricing-text p {
-        font-size: 1.05rem;
+        font-size: 1.5rem;
         line-height: 1.8;
         color: var(--dark-text);
         margin-bottom: 1rem;
@@ -396,383 +259,379 @@
         font-weight: 600;
       }
 
-      .price-highlight {
-        background: linear-gradient(
-          135deg,
-          var(--accent-teal) 0%,
-          #5aa9ae 100%
-        );
-        color: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin-top: 2rem;
-        text-align: center;
+      .pricing-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
 
-      .price-highlight p {
-        color: white;
-        font-size: 1.1rem;
-        margin: 0;
-      }
-
-      /* Section FAQ */
+      /* FAQ Section */
       .faq-section {
-        padding: 6rem 2rem;
-        background: white;
+        max-width: 1200px;
+        margin: 4rem auto;
+        padding: 0 2rem;
       }
 
-      .faq-container {
-        max-width: 900px;
-        margin: 0 auto;
+      .faq-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
       }
 
       .faq-item {
-        background: var(--light-bg);
-        padding: 2.5rem;
-        border-radius: 15px;
-        margin-bottom: 2rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-      }
-
-      .faq-item:hover {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       }
 
       .faq-question {
         font-family: "Playfair Display", serif;
-        font-size: 1.5rem;
-        color: var(--primary-blue);
+        font-size: 1.2rem;
+        color: var(--dark-text);
         margin-bottom: 1rem;
         font-weight: 600;
       }
 
       .faq-answer {
-        font-size: 1.05rem;
-        line-height: 1.8;
+        font-size: 0.95rem;
+        line-height: 1.7;
         color: var(--dark-text);
-      }
-
-      .faq-answer strong {
-        color: var(--primary-blue);
-        font-weight: 600;
       }
 
       /* Footer */
       footer {
-        background: var(--dark-text);
-        color: white;
-        padding: 4rem 2rem 2rem;
+        background: white;
+        color: var(--dark-text);
+        padding: 4rem 2rem;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 4rem;
       }
 
       .footer-content {
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 3rem;
-        margin-bottom: 3rem;
+        grid-template-columns: 1fr 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
       }
 
-      .footer-section h3 {
+      .footer-logo {
         font-family: "Playfair Display", serif;
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        color: var(--primary-blue);
+        font-weight: 600;
       }
 
-      .footer-section p,
-      .footer-section a {
-        color: rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        line-height: 2;
-        display: block;
+      .footer-links {
+        display: flex;
+        gap: 3rem;
+        align-items: center;
       }
 
-      .footer-section a:hover {
-        color: var(--accent-teal);
+      .footer-links a {
+        color: var(--dark-text);
+        text-decoration: underline;
+        font-size: 1rem;
       }
 
-      .footer-icon {
-        display: inline-block;
-        margin-right: 0.5rem;
-      }
-
-      .footer-bottom {
-        text-align: center;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.6);
+      .footer-contact-image img {
+        max-width: 100%;
+        height: auto;
       }
 
       /* Responsive */
       @media (max-width: 968px) {
-        .hero-intro,
-        .pricing-content {
+        .hero-banner,
+        .pricing-banner {
+          grid-template-columns: 1fr;
+        }
+
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .faq-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-content {
           grid-template-columns: 1fr;
           gap: 2rem;
         }
 
-        .hero-image-wrapper,
-        .pricing-image-wrapper {
-          max-width: 400px;
-          margin: 0 auto;
-        }
-
-        .hero-text,
-        .pricing-text {
-          padding: 2rem;
-        }
-
-        .etapes-grid {
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-
-        .etape-card {
-          padding: 2rem;
-        }
-
-        .faq-item {
-          padding: 2rem;
+        .footer-links {
+          flex-direction: column;
+          gap: 1rem;
+          align-items: flex-start;
         }
       }
     </style>
   </head>
-  <body id="home">
+  <body>
     <!-- Navbar -->
     <nav class="navbar">
       <div class="nav-container">
-        <a href="./index.html" class="nav-logo">
-          <span class="nav-logo-text">Marion website</span>
-        </a>
-
+        <a href="index.html" class="nav-logo">Mille et une vies</a>
         <ul class="nav-menu">
-          <li><a href="./index.html">Accueil</a></li>
-          <li class="">
-            <a href="#contact">S'offrir une biographie</a>
-          </li>
-          <li><a href="./merencontrer.html">Mon histoire</a></li>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="#services">Services</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-
-        <div class="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
     </nav>
-    <!-- Hero Section -->
-    <section class="hero-bio">
-      <h1 class="hero-title">Biographie</h1>
 
-      <div class="hero-intro">
-        <div class="hero-image-wrapper">
-          <img
-            src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500&h=600&fit=crop"
-            alt="Fleurs"
-            class="hero-image"
-          />
-        </div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <h1 class="page-title">Biographie</h1>
+
+      <div class="hero-banner">
+        <img
+          src="https://1000etunevies.fr/wp-content/themes/twentytwentyfive/assets/images/botany-flowers.webp"
+          alt="Fleurs blanches"
+          class="hero-image"
+        />
         <div class="hero-text">
-          <h2>Chaque existence recèle une histoire singulière</h2>
           <p>
-            ...des rencontres, des parcours, des liens, des joies, des
-            blessures, dans lesquelles souhaite transmettre se simplement.
+            Chaque existence recèle une histoire singulière, des rencontres, un
+            parcours. Chacun de ces éléments que l'on souhaite transmettre, ou
+            mettre en lumière à des moments forts.
           </p>
-          <h3
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro-section">
+      <h2 class="intro-title">Racontez votre histoire</h2>
+      <p class="intro-text">
+        Je prends le temps qui s'impose pour connaître le détailleur de votre
+        récit, bienveillance, et de votre oeuvre le caractère d'un moment clé
+        dans un texte écrit. Selon vos choix, votre texte sera édité ou non et
+        relira avec vos proches.
+      </p>
+      <a href="#contact" class="intro-button">Me rencontrer</a>
+    </section>
+
+    <!-- Services Section -->
+    <section>
+      <h2 class="section-title">Comment se déroule la prestation ?</h2>
+
+      <div class="cards-grid">
+        <!-- Card 1 -->
+        <div class="service-card">
+          <div
+            class="card-image-wrapper"
             style="
-              font-family: 'Playfair Display', serif;
-              font-size: 1.5rem;
-              color: var(--primary-blue);
-              margin: 1.5rem 0;
+              background: linear-gradient(135deg, #e8d5e8 0%, #d4c4d4 100%);
             "
           >
-            Racontez votre histoire
-          </h3>
-          <p>
-            Un premier ou en visage entre témoignant à l'obtime notre attention
-            et bienvaillance, si pratiques-nous vos archives et témoignages je
-            mets sur mesure une biographie votre loiseur.
-          </p>
-          <a href="#contact" class="btn-decouvrir">Découvrir</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Comment se déroule -->
-    <section class="deroulement-section">
-      <h2 class="section-title-main">Comment se déroule la prestation ?</h2>
-
-      <div class="etapes-grid">
-        <!-- Étape 1 -->
-        <div class="etape-card">
-          <div class="etape-icon">🤝</div>
-          <h3 class="etape-title">Un premier rendez-vous</h3>
-          <p class="etape-description">
-            Tout commence par une rencontre : chez vous, en visio ou autour d'un
-            café. Pendant ce temps privilégié, je vous écoute, à votre histoire
-            commence à émerger et j'évalue avec vous précision le sujet de votre
-            projet.
-          </p>
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2026/01/Design-sans-titre-38-3-edited.png"
+              alt="Un premier entretien gratuit"
+              class="card-image"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Un premier entretien gratuit</h3>
+            <p class="card-text">
+              Lors de cette première rencontre à faire en présence ou
+              visionnement. J'anis de dialogue, l'échange est présenté à vous
+              témoigner à l'un chemin et le souhait de l'écrit.
+            </p>
+          </div>
         </div>
 
-        <!-- Étape 2 -->
-        <div class="etape-card">
-          <div class="etape-icon">💡</div>
-          <h3 class="etape-title">Une raconter claire</h3>
-          <p class="etape-description">
-            À l'issue du premier entretien, je vous fais un devis personnalisé
-            et adapté. Nous fixons ensemble : nombre d'entretiens, durée des
-            séances (optionnels), modalités de travail avec support photo
-            graphique et prix global au projet.
-          </p>
+        <!-- Card 2 -->
+        <div class="service-card">
+          <div
+            class="card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #f5e6c8 0%, #e8d5b0 100%);
+            "
+          >
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2026/01/Design-sans-titre-39-4-edited.png"
+              alt="Une raconter claire"
+              class="card-image"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Une raconter claire</h3>
+            <p class="card-text">
+              Suite à ce premiere rencontre, vous recevez une proposition de
+              travail pour personnaliser son accompagnement décision complète et
+              nombre important d'entretiens.
+            </p>
+          </div>
         </div>
 
-        <!-- Étape 3 -->
-        <div class="etape-card">
-          <div class="etape-icon">🎤</div>
-          <h3 class="etape-title">Rendez-vous à votre plume</h3>
-          <p class="etape-description">
-            Nous convenons ensuite de séances d'écriture sous mesure, vous êtes
-            face avec mon l'enregistré et sous vous accomplis alternativement et
-            progressivement et je tions à la clarification de votre narratifs.
-            Nous pourrons avec la voix biographie. Dès accompagnée par une élu
-            écriture de vos écrits le la forme de nos entretiens. Votre
-            bienveillance se la feuille et information.
-          </p>
+        <!-- Card 3 -->
+        <div class="service-card">
+          <div
+            class="card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #e8d5e8 0%, #d4c4d4 100%);
+            "
+          >
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2026/01/Design-sans-titre-40-2-edited.png"
+              alt="Rendez-vous à votre rythme"
+              class="card-image"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Rendez-vous à votre rythme</h3>
+            <p class="card-text">
+              Nous commençons les entretiens, nous vous rencontrons pour
+              recueillir et témoigner individuels ou en groupe.
+            </p>
+          </div>
         </div>
 
-        <!-- Étape 4 -->
-        <div class="etape-card">
-          <div class="etape-icon">✍️</div>
-          <h3 class="etape-title">L'écriture de texte</h3>
-          <p class="etape-description">
-            A partir de ma prise de parole, j'offre sa biographie.
-            Périodiquement, je prends ou (directement proposé), si les texte
-            seulement si le texte vous impressionnant et le lors vous correspond
-            le mis. Tout en gardant de vue votre but et vous projets.
-          </p>
+        <!-- Card 4 -->
+        <div class="service-card">
+          <div
+            class="card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #f5c8d4 0%, #e8b0c0 100%);
+            "
+          >
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2026/01/Design-sans-titre-41-2-edited-768x576.png"
+              alt="L'écriture de texte"
+              class="card-image"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">L'écriture de texte</h3>
+            <p class="card-text">
+              Au fur et à mesure, mince à la richesse de ces échanges, je récris
+              lace votre récit.
+            </p>
+          </div>
         </div>
 
-        <!-- Étape 5 -->
-        <div class="etape-card">
-          <div class="etape-icon">📋</div>
-          <h3 class="etape-title">Relecture et documentation</h3>
-          <p class="etape-description">
-            A la relecture, l'objectif votre vérifier l'adéquation entre ce que
-            vous avec la vous récit proposé. J'enrichie votre récit si me par
-            des recherches textes de personnesée : lieux, événements politiques
-            ou historiques. Puis, un projet vous envoyé finalisation, donc
-            relecture finale afin que vous élimine des erreurs encore des
-            coquilles et d'organise les sources.
-          </p>
+        <!-- Card 5 -->
+        <div class="service-card">
+          <div
+            class="card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #c8e8f5 0%, #b0d4e8 100%);
+            "
+          >
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2026/01/Design-sans-titre-42-2-edited-768x576.png"
+              alt="Relecture et documentation"
+              class="card-image"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Relecture et documentation</h3>
+            <p class="card-text">
+              Votre récits des mémoires vous ressemble nos correspondant
+              relature ces entretiens.
+            </p>
+          </div>
         </div>
 
-        <!-- Étape 6 -->
-        <div class="etape-card">
-          <div class="etape-icon">📖</div>
-          <h3 class="etape-title">Finalisation</h3>
-          <p class="etape-description">
-            Une fois le récit retravaillé, c'est moi que l'illustration de la
-            couverture pour un et les images intégrées. Je choisis les papiers
-            photo, les supports souvenirs qui s'infinie des sois émotionnelle
-            votre histoire. Cette étape permet de concrétiser votre projet dans
-            un livré personnalisé que je procure.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section Et combien ça coûte -->
-    <section class="pricing-section">
-      <h2 class="section-title-main">Et combien ça coûte?</h2>
-
-      <div class="pricing-content">
-        <div class="pricing-image-wrapper">
-          <img
-            src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=500&h=600&fit=crop"
-            alt="Fleurs pricing"
-            class="pricing-image"
-          />
-        </div>
-        <div class="pricing-text">
-          <h2>
-            Chaque projet collaboratif, singulière; chacun a été créature d'un
-            récit.
-          </h2>
-          <p>
-            Le prix d'une biographie change en fonction de
-            <strong>l'ampleur du projet</strong>, du
-            <strong>nombre d'entretiens</strong>, de l'<strong
-              >épaisseur du livre</strong
-            >, et de la <strong>profondeur de recherche historique</strong>.
-          </p>
-          <p>
-            Mon approche néanmoins, tout en faisant veillez à ne pas vous
-            dérouter des éléments les plus essentiels à la qualité de votre
-            récit.
-          </p>
-          <p>
-            Le prix d'une preuve intégrale oscillant <strong>l'heure</strong> et
-            <strong>progressions</strong> et a la <strong>reliure</strong> du
-            preuve en l'élément du récit. Les projet compris directement de mon
-            côte suivant.
-          </p>
-
-          <div class="price-highlight">
-            <p>
-              <strong>Pour un projet plume, pour se orienter :</strong> Les
-              services il une biographie 50 pages à l'ouvrage 100 à 140 / par
-              page de récit, hors illustration et impression du livre.
+        <!-- Card 6 -->
+        <div class="service-card">
+          <div
+            class="card-image-wrapper"
+            style="
+              background: linear-gradient(135deg, #d4e8e8 0%, #c0d4d4 100%);
+            "
+          >
+            <img
+              src="https://1000etunevies.fr/wp-content/uploads/2026/01/Design-sans-titre-37-4-edited-768x576.png"
+              alt="Finalisation"
+              class="card-image"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Finalisation</h3>
+            <p class="card-text">
+              Une fois le récit définitivement validé et attentive la lecture
+              est soignée.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section Questions fréquentes -->
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+      <h2 class="section-title">Et combien ça coûte?</h2>
+
+      <div class="pricing-banner">
+        <div class="pricing-text">
+          <p>
+            Le premier entretien est <strong>gratuit</strong>. Il est un premier
+            temps pour mieux faire connaissance.
+          </p>
+          <p>
+            Ensuite, le tarif varie selon la
+            <strong>durée d'entretien</strong> — le nombre d'heures ainsi que le
+            nombre de Pages.
+          </p>
+          <p>
+            <strong>Chaque heure</strong>: Mon intervention s'évalue autour de
+            50€/heure.
+          </p>
+          <p>
+            À titre indicatif, un récit biographique de 50 à 80 pages peut
+            coûter entre 3 000€ et 5 000€.
+          </p>
+        </div>
+        <img
+          src="https://1000etunevies.fr/wp-content/themes/twentytwentyfive/assets/images/botany-flowers.webp"
+          alt="Fleurs"
+          class="pricing-image"
+        />
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
     <section class="faq-section">
-      <h2 class="section-title-main">Questions fréquentes</h2>
+      <h2 class="section-title">Questions fréquentes</h2>
 
-      <div class="faq-container">
+      <div class="faq-grid">
         <div class="faq-item">
           <h3 class="faq-question">
-            Comment assurer le succès de votre biographie ?
+            Combien de temps nécessaire un projet biographique ?
           </h3>
           <p class="faq-answer">
-            La biographie n'est pas un article tout fait écrire sur mesure.
-            L'évolution du récit passe par un dialogue continu entre nous. Vous
-            avez <strong>l'écriture de contrôle</strong> sur votre histoire,
-            avec des points de validation tout en long du processus.
+            Cela peut varier de 6 mois à 1 an selon la complexité.
           </p>
         </div>
 
         <div class="faq-item">
           <h3 class="faq-question">
-            Combien du temps, combien de récit des biographie à la parole, c'est
-            possible ?
+            Et si je veux faire une pause ce récrit ?
           </h3>
           <p class="faq-answer">
-            Sincèrement ? De six mois unique et incroyable ! Le décongéla la
-            distance de la projection des documents, le nombre de parcours, la
-            complexité des informations sous conditions même. C'est présentes
-            pages où vous pages et leur récit de leur de vous évoquables le que
-            se vous s'exprime avec autres états.
+            Aucun souci pas il peut! Nous reprendrons le projet lorsque vous
+            serez prêt.
           </p>
         </div>
 
         <div class="faq-item">
           <h3 class="faq-question">
-            Je vous faire intervenir une biographie à un proche, pour l'offrir à
-            mes sentiments avec ça il investis ?
+            Je souhaite offrir une biographie à un proche. C'est possible ?
+          </h3>
+          <p class="faq-answer">Oui ! C'est une idée unique et impérieuse.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">
+            Je veux faire figurer mon récit pour un anniversaire. Comment faire
+            ?
           </h3>
           <p class="faq-answer">
-            Qrévation ! <strong>Idée même à l'Imagination</strong>. Je pense
-            vous proposer écriture d'une biographie avec précises à accompagner
-            qu récit pour l'offrir à mes fécrit pour en surprise. Non compris
-            des vous qui s'ingérera bien respecter puis les deux pour d'approche
-            sera sujet être dévoreur.
+            Je peux vous accompagner dans la mise en forme du livre.
           </p>
         </div>
 
@@ -781,10 +640,7 @@
             Peut-on financer une biographie à plusieurs?
           </h3>
           <p class="faq-answer">
-            Oui, c'est même très courant, un récit de ne soit pas par une projet
-            avec plusieurs personnages peut avec prix répartir entre un groupe
-            de membres, ou se réunis et d'un cadeau avec elle. La l'ambiance
-            lorsqu'il coût peut apporter en avenir par mes preuve le projet ?
+            Oui, bien évidemment. Je peux établir une proposition adaptée.
           </p>
         </div>
       </div>
@@ -793,74 +649,26 @@
     <!-- Footer -->
     <footer>
       <div class="footer-content">
-        <div class="footer-section">
-          <h3>Mille et une vies</h3>
-          <p>Écrite d'accompagnement</p>
-          <p>Biographe, Rédac, Paris</p>
-          <p>Nathalie Bienfait</p>
+        <div class="footer-logo-section">
+          <h2 class="footer-logo">Mille et une vies</h2>
         </div>
 
-        <div class="footer-section">
-          <h3>Contact</h3>
-          <p>
-            <span class="footer-icon">📧</span>
-            <a href="mailto:contact@milleetunevies.fr"
-              >contact@milleetunevies.fr</a
-            >
-          </p>
-          <p>
-            <span class="footer-icon">📞</span>
-            <a href="tel:+33123456789">01 23 45 67 89</a>
-          </p>
-        </div>
-
-        <div class="footer-section">
-          <h3>CGU</h3>
+        <div class="footer-links">
           <a href="#">Mentions légales</a>
+          <a href="#">CGU</a>
           <a href="#">Mes Engagements</a>
         </div>
-      </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2025 Mille et une vies. Tous droits réservés.</p>
+        <div
+          class="footer-contact-image display: flex; align-items: center; justify-content: flex-end"
+        >
+          <img
+            src="./public/contacts.png"
+            alt="Lieux d'intervention et Contact"
+            style="width: 100%; height: auto"
+          />
+        </div>
       </div>
     </footer>
-
-    <script>
-      // Menu hamburger toggle
-      const hamburger = document.querySelector(".hamburger");
-      const navMenu = document.querySelector(".nav-menu");
-
-      hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
-      });
-
-      // Fermer le menu quand on clique sur un lien
-      document.querySelectorAll(".nav-menu li a").forEach((link) => {
-        link.addEventListener("click", () => {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
-        });
-      });
-
-      // Fermer le menu quand on clique en dehors
-      document.addEventListener("click", (e) => {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
-        }
-      });
-
-      // Effet de scroll sur la navbar
-      const navbar = document.querySelector(".navbar");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add("scrolled");
-        } else {
-          navbar.classList.remove("scrolled");
-        }
-      });
-    </script>
   </body>
 </html>
